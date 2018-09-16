@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HeaderModule } from './header/header.module'
+import { HeaderModule } from './header/header.module';
+import { AppRoutingModule } from './app.routing.module';
+import { TxSettingsModule } from './tx-settings/tx-settings.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { HeaderModule } from './header/header.module'
   ],
   imports: [
     BrowserModule,
-    HeaderModule
+    HeaderModule,
+    TxSettingsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
