@@ -1,0 +1,8 @@
+<div class="box" on-click="coordinatesOfTx($event)" (mousemove)="coordinates($event)">
+<img src="./img/hotel.png" class="img">
+</div>
+<p>x: {{clientX}}, y: {{clientY}}</p>
+<div>
+<button (click) ="solveDistance()">Oblicz dystans</button>
+</div>
+<p>{{ distance | number: '2.1-2'}} metrów</p>
