@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 
 const appRoutes: Routes = [
 {
-  path: 'tx-settings',
+  path: 'main',
   component: TxComponent
 }
 ];

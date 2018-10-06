@@ -2,9 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { HeaderModule } from './header/header.module';
 import { AppRoutingModule } from './app.routing.module';
 import { TxSettingsModule } from './tx-settings/tx-settings.module';
+import { IndoorMapModule } from './indoor-map/indoor-map.module';
 
 @NgModule({
   declarations: [
@@ -12,9 +12,9 @@ import { TxSettingsModule } from './tx-settings/tx-settings.module';
   ],
   imports: [
     BrowserModule,
-    HeaderModule,
     TxSettingsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    IndoorMapModule
   ],
   providers: [],
   bootstrap: [AppComponent]
