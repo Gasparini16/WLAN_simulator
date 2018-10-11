@@ -1,35 +1,31 @@
 <p class="settings-header">Tx settings</p>
 <div class="settings-container">
-  <form [formGroup]="txForm">
+  <form (ngSubmit)="onConfirm(txForm)" [formGroup]="txForm">
     <div class="row form-group">
       <div class="col-sm-3">
       <label>Tx Power [dBm]</label>
       <input formControlName="txPower" type="text" class="form-control" placeholder="Tx power">
+      <p *ngIf="!txForm.get('txPower').valid && txForm.get('txPower').dirty" class="error">This field is required! Only numbers.</p>
       </div>
       <div class="col-sm-3">
       <label>Frequency [GHz]</label>
       <input formControlName="frequency" type="text" class="form-control" placeholder="Frequency">
+      <p *ngIf="!txForm.get('frequency').valid && txForm.get('frequency').dirty" class="error">This field is required! Only numbers.</p>
       </div>
-      <div class="col-sm-3">
-      <div class="form-group">
-        <label>Antenna</label>
-        <select formControlName="antenna" class="form-control">
-          <option>Tx</option>
-          <option>Rx</option>
-        </select>
-      </div>
-    </div>
     <div class="col-sm-3">
         <div class="form-group">
           <label>Propagation Model</label>
           <select formControlName="propagationModel" class="form-control">
-            <option>Model 1</option>
-            <option>Model 2</option>
-            <option>Model 3</option>
+            <option>Kamerman</option>
+            <option>Multi-Wall</option>
+            <option>One-Slope</option>
           </select>
         </div>
       </div>
     </div>
+    <button type = "submit" [disabled]="!txForm.valid">Confirm</button>
   </form>
+  <pre>{{txForm.value |json}}</pre>
+  <pre>{{txForm.get('frequency').valid |json}}</pre>
 </div>
 
