@@ -1,6 +1,6 @@
 <p class="settings-header">Tx settings</p>
 <div class="settings-container">
-  <form (ngSubmit)="onConfirm(txForm)" [formGroup]="txForm">
+  <form (ngSubmit)="onSubmit()" [formGroup]="txForm">
     <div class="row form-group">
       <div class="col-sm-3">
       <label>Tx Power [dBm]</label>
@@ -23,7 +23,9 @@
         </div>
       </div>
     </div>
-    <button type = "submit" [disabled]="!txForm.valid">Confirm</button>
+    <button type = "submit" [disabled]="!txForm.valid" class="btn btn-success">Submit</button>
+    <button (click)="resetForm()" class = "btn btn-dark">Reset</button>
+
   </form>
   <pre>{{txForm.value |json}}</pre>
   <pre>{{txForm.get('frequency').valid |json}}</pre>

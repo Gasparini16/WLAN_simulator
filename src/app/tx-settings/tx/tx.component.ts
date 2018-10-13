@@ -13,13 +13,14 @@ export class TxComponent implements OnInit, TxSetUp {
   propagationModel: ModelsOfPropagation;
   txForm: FormGroup;
   propModel = ModelsOfPropagation;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.txForm = this.buildTxForm();
+     this.txForm = this.buildTxForm();
   }
 
   buildTxForm() {
@@ -29,9 +30,12 @@ export class TxComponent implements OnInit, TxSetUp {
       propagationModel: ['', Validators.required]
     });
   }
-  onConfirm() {
-    this.txPower = this.txPower;
-    this.frequency = this.frequency;
-    this.propModel = this.propModel;
+
+  onSubmit() {
+    this.submitted = true;
+ }
+
+ resetForm() {
+  this.txForm.reset();
  }
 }
