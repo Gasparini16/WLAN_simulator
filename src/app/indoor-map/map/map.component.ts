@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { angularMath } from 'angular-ts-math';
 
 @Component({
@@ -25,7 +25,7 @@ export class MapComponent implements OnInit {
     this.clientY = event.clientY;
   }
   coordinatesOfTx(event: MouseEvent): void {
-    switch(this.isFirstClick) {
+    switch (this.isFirstClick) {
       case true:
         this.clientXTransmitter = event.clientX;
         this.clientYTransmitter = event.clientY;

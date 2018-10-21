@@ -1,7 +1,11 @@
-import { PropagationModel } from './propagation-model';
-import { PropagationModelsModule } from './propagation-models.module';
+import { Input, Injectable } from '@angular/core';
+import { TxComponent } from '../tx-settings/tx/tx.component';
 
-export class KamermanPropagationModel implements PropagationModel {
-  pi: number;
-  waveLength: number;
+@Injectable ()
+export class Kamerman {
+private numerek = 10;
+
+  public getNumber(): number {
+    return this.numerek;
+  }
 }

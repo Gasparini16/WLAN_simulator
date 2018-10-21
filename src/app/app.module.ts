@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { TxSettingsModule } from './tx-settings/tx-settings.module';
 import { IndoorMapModule } from './indoor-map/indoor-map.module';
 import { FormsModule } from '@angular/forms';
+import { PropagationModelsModule } from './propagation-models/propagation-models.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     TxSettingsModule,
     AppRoutingModule,
     IndoorMapModule,
-    FormsModule
+    FormsModule,
+    PropagationModelsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
