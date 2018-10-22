@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 export class OneSlope {
 private oneMetterPathLoss: number;
 private oneSlopePathLoss: [number, number];
-  solveOneMetterPathLoss(wavelength: number) {
+
+public solveOneMetterPathLoss(wavelength: number) {
     this.oneMetterPathLoss = 20 * Math.log((4 * Math.PI) / wavelength);
   }
   public getOneMetterPathLoss(): number {
