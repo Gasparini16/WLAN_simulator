@@ -5,8 +5,9 @@ import { TxComponent } from '../tx-settings/tx/tx.component';
 export class Kamerman {
   private oneMetterPathLoss: number;
   private eightMetterPathLoss: number;
-  private kamermanPathLoss: [number, number];
+  private kamermanPathLoss: [number];
   private pathLossExponnent = [2, 3.3];
+  private realDistance: number [];
 
   public solveOneMetterPathLoss(wavelength: number) {
       this.oneMetterPathLoss = 20 * Math.log((4 * Math.PI) / wavelength);
@@ -23,20 +24,22 @@ export class Kamerman {
       return this.eightMetterPathLoss;
     }
 
-    public solveKamerman(distance: number): [number, number] {
-      const periodOfDistance = distance / 0.5 - 2;
-
-      for ( let i = 1; i < periodOfDistance; i++) {
-        if ((periodOfDistance * 0.5) <= 8) {
-         const pathLoss = this.getOneMetterPathLoss() - this.pathLossExponnent[0] * 10 * Math.log(periodOfDistance * 0.5);
-        this.kamermanPathLoss = [i * 0.5, pathLoss];
+    public solveKamerman(distance: number) {
+      const periodOfDistance = distance / 0.5;
+      let pathLoss = 0;
+      Math.round(periodOfDistance);
+      for ( let i = 0; i < periodOfDistance; i++) {
+        if ((i * 0.5) <= 8) {
+        pathLoss = this.getOneMetterPathLoss() - this.pathLossExponnent[0] * 10 * Math.log(i * 0.5);
+        this.kamermanPathLoss[i] = Math.round(pathLoss * 10) / 10;
+        this.realDistance[i] = i * 0.5;
         }
-        if ((periodOfDistance * 0.5) > 8) {
-          const pathLoss = this.getEightMetterPathLoss() - this.pathLossExponnent[1] * 10 * Math.log(periodOfDistance * 0.5)
-          - this.pathLossExponnent[1] * 10 * Math.log((periodOfDistance * 0.5) / 8);
-          this.kamermanPathLoss = [i * 0.5, pathLoss];
+        if ((i * 0.5) > 8) {
+          pathLoss = this.getEightMetterPathLoss() - this.pathLossExponnent[1] * 10 * Math.log(i * 0.5)
+          - this.pathLossExponnent[1] * 10 * Math.log((i * 0.5) / 8);
+          this.kamermanPathLoss[i] = Math.round(pathLoss * 10) / 10;
+          this.realDistance[i] = i * 0.5;
           }
       }
-      return this.kamermanPathLoss;
     }
 }

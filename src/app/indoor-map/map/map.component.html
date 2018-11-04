@@ -1,8 +1,6 @@
-<div class="box" on-click="coordinatesOfTx($event)" (mousemove)="coordinates($event)">
-<img src="./img/hotel.png" class="img">
-</div>
-<p>x: {{clientX}}, y: {{clientY}}</p>
+<canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, $canvas)" (mousemove)="coordinates($event, $canvas)"></canvas>
+<p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
 <div>
-<button (click) ="onClickSolveDistance(clientXTransmitter, clientYTransmitter, clientXReceiver, clientYReceiver)">Oblicz dystans</button>
+<button (click) ="onClickSolveDistance(clientXTransmitter, clientYTransmitter, clientXReceiver, clientYReceiver); drawLine()">Oblicz dystans</button>
 </div>
 <p>{{ getSolvedDistance() | number: '2.1-2'}} metrów</p>
