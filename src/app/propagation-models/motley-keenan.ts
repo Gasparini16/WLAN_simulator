@@ -95,8 +95,6 @@ export class MotleyKeenan {
             this.distanceInMeters.solveDistance(x1, y1, x1 + parameterM * parameterT, y1 + parameterN * parameterT);
             this.distanceWallslist.push(this.distanceInMeters.getDistance());
           }
-          this.context.fillRect(x1 + parameterM * parameterT, y1 + parameterN * parameterT, 1, 1);
-          this.context.fillStyle = 'red';
           parameterT += 1 / distance;
         }
         break;
@@ -106,8 +104,6 @@ export class MotleyKeenan {
           this.distanceInMeters.solveDistance(x1, y1, x1 - parameterM * parameterT, y1 - parameterN * parameterT);
           this.distanceWallslist.push(this.distanceInMeters.getDistance());
         }
-        this.context.fillRect(x1 - parameterM * parameterT, y1 - parameterN * parameterT, 1, 1);
-        this.context.fillStyle = 'red';
         parameterT += 1 / distance;
       }
       break;
@@ -117,8 +113,6 @@ export class MotleyKeenan {
           this.distanceInMeters.solveDistance(x1, y1, x1, y1 + parameterN * parameterT);
           this.distanceWallslist.push(this.distanceInMeters.getDistance());
         }
-        this.context.fillRect(x1, y1 + parameterN * parameterT, 1, 1);
-        this.context.fillStyle = 'red';
         parameterT += 1 / distance;
       }
       break;
@@ -128,8 +122,6 @@ export class MotleyKeenan {
           this.distanceInMeters.solveDistance(x1, y1, x1, y1 - parameterN * parameterT);
           this.distanceWallslist.push(this.distanceInMeters.getDistance());
         }
-        this.context.fillRect(x1, y1 - parameterN * parameterT, 1, 1);
-        this.context.fillStyle = 'red';
         parameterT += 1 / distance;
       }
       break;
@@ -139,8 +131,6 @@ export class MotleyKeenan {
           this.distanceInMeters.solveDistance(x1, y1, x1 + parameterM * parameterT, y1);
           this.distanceWallslist.push(this.distanceInMeters.getDistance());
         }
-        this.context.fillRect(x1 + parameterM * parameterT, y1, 1, 1);
-        this.context.fillStyle = 'red';
         parameterT += 1 / distance;
       }
       break;
@@ -150,8 +140,6 @@ export class MotleyKeenan {
           this.distanceInMeters.solveDistance(x1, y1, x1 - parameterM * parameterT, y1);
           this.distanceWallslist.push(this.distanceInMeters.getDistance());
         }
-        this.context.fillRect(x1 - parameterM * parameterT, y1, 1, 1);
-        this.context.fillStyle = 'red';
         parameterT += 1 / distance;
       }
       break;

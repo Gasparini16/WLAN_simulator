@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DistanceService } from '../distance-algorithm/distance';
 import { DrawService } from '../hotelMap/drawService';
-import { RecursiveTemplateAstVisitor, BoundTextAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-map',
