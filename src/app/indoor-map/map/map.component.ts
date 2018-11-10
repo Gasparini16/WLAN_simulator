@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DistanceService } from '../distance-algorithm/distance';
+import { DistanceService } from '../distance-algorithm/distanceService';
 import { DrawService } from '../hotelMap/drawService';
 
 @Component({

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Kamerman } from './propagation-models/kamerman';
 
 @Component({
   selector: 'app-root',

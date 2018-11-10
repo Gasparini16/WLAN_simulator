@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { TxSetUp, ModelsOfPropagation } from '../tx-settings-interface';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { ModelsOfPropagation } from '../tx-settings-interface';
+import { SettingsService } from '../settings-service/settings.service';
 
 @Component({
   selector: 'app-tx',
   templateUrl: './tx.component.html',
   styleUrls: ['./tx.component.less']
 })
-export class TxComponent implements OnInit, TxSetUp {
-  txPower: number;
-  frequency: number;
-  propagationModel: ModelsOfPropagation;
+export class TxComponent implements OnInit {
   txForm: FormGroup;
   propModel = ModelsOfPropagation;
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private txSettings: SettingsService
   ) { }
 
   ngOnInit() {
@@ -32,10 +31,21 @@ export class TxComponent implements OnInit, TxSetUp {
   }
 
   onSubmit() {
-    this.submitted = true;
- }
-
- resetForm() {
+    this.txSettings.setTxPower(parseInt(this.txForm.value.txPower, 10));
+    this.txSettings.setFrequency(parseInt(this.txForm.value.frequency, 10));
+    switch (this.txForm.value.propagationModel) {
+      case 'Kamerman':
+      this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
+      break;
+      case 'Motley-Keenan':
+      this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
+      break;
+      case 'One-Slope':
+      this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
+      break;
+    }
+  }
+    resetForm() {
   this.txForm.reset();
  }
 }
