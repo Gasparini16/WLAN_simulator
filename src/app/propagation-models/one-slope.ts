@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+providedIn: 'root'
+})
 export class OneSlope {
 private oneMetterPathLoss: number;
-// private oneSlopePathLoss: {[index: number]: [number]};
 private realDistance: number [];
 private oneSlopePathLoss: number [];
 
@@ -22,5 +23,11 @@ public solveOneMetterPathLoss(wavelength: number) {
       this.realDistance[i] = periodOfDistance;
       this.oneSlopePathLoss[i] = Math.round(pathLoss * 10) / 10;
     }
+  }
+  public getOneSlopePathLoss(): number[] {
+    return this.oneSlopePathLoss;
+  }
+  public getOneSlopeRealDistanceArray(): number[] {
+    return this.realDistance;
   }
 }

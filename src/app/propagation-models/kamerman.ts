@@ -1,7 +1,9 @@
 import { Input, Injectable } from '@angular/core';
 import { TxComponent } from '../tx-settings/tx/tx.component';
 
-@Injectable ()
+@Injectable ({
+  providedIn: 'root'
+})
 export class Kamerman {
   private oneMetterPathLoss: number;
   private eightMetterPathLoss: number;
@@ -41,5 +43,11 @@ export class Kamerman {
           this.realDistance[i] = i * 0.5;
           }
       }
+    }
+    public getKamermanPathLoss(): number[] {
+      return this.kamermanPathLoss;
+    }
+    public getKamermanRealDistanceArray(): number[] {
+      return this.realDistance;
     }
 }

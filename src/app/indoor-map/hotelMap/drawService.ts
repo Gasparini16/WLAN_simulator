@@ -1,19 +1,23 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import { angularMath } from 'angular-ts-math';
+import { DistanceService } from '../distance-algorithm/distanceService';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DrawService {
-    constructor () {}
+    constructor (private distanceInMeters: DistanceService) {}
 private  canvas: HTMLCanvasElement;
 private  context: CanvasRenderingContext2D;
 private numberOfWalls;
 private blackPixel = 0;
+private distanceWallslist: number[];
 
   drawHotelMap() {
     this.canvas = <HTMLCanvasElement> document.getElementById('hotelMap');
     this.context = this.canvas.getContext('2d');
     const hotelMapImage = new Image();
-    hotelMapImage.src = './img/black_hotel.png';
+    hotelMapImage.src = './assets/images/black_hotel.png';
     hotelMapImage.onload = () => {
       this.context.drawImage(hotelMapImage, 0, 0);
     };
@@ -72,6 +76,10 @@ private blackPixel = 0;
           this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1 + parameterN * parameterT));
           this.context.fillRect(x1 + parameterM * parameterT, y1 + parameterN * parameterT, 1, 1);
           this.context.fillStyle = 'red';
+          if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1 + parameterN * parameterT))) {
+            this.distanceInMeters.solveDistance(x1, y1, x1 + parameterM * parameterT, y1 + parameterN * parameterT);
+            this.distanceWallslist.push(this.distanceInMeters.getDistance());
+          }
           parameterT += 1 / distance;
         }
         break;
@@ -80,6 +88,10 @@ private blackPixel = 0;
         this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1 - parameterN * parameterT));
         this.context.fillRect(x1 - parameterM * parameterT, y1 - parameterN * parameterT, 1, 1);
         this.context.fillStyle = 'red';
+        if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1 - parameterN * parameterT))) {
+          this.distanceInMeters.solveDistance(x1, y1, x1 - parameterM * parameterT, y1 - parameterN * parameterT);
+          this.distanceWallslist.push(this.distanceInMeters.getDistance());
+        }
         parameterT += 1 / distance;
       }
       break;
@@ -88,6 +100,10 @@ private blackPixel = 0;
         this.checkPixel(this.getPixelColor(x1, y1 + parameterN * parameterT));
         this.context.fillRect(x1, y1 + parameterN * parameterT, 1, 1);
         this.context.fillStyle = 'red';
+        if (this.checkPixel(this.getPixelColor(x1, y1 + parameterN * parameterT))) {
+          this.distanceInMeters.solveDistance(x1, y1, x1, y1 + parameterN * parameterT);
+          this.distanceWallslist.push(this.distanceInMeters.getDistance());
+        }
         parameterT += 1 / distance;
       }
       break;
@@ -96,6 +112,10 @@ private blackPixel = 0;
         this.checkPixel(this.getPixelColor(x1, y1 - parameterN * parameterT));
         this.context.fillRect(x1, y1 - parameterN * parameterT, 1, 1);
         this.context.fillStyle = 'red';
+        if (this.checkPixel(this.getPixelColor(x1, y1 - parameterN * parameterT))) {
+          this.distanceInMeters.solveDistance(x1, y1, x1, y1 - parameterN * parameterT);
+          this.distanceWallslist.push(this.distanceInMeters.getDistance());
+        }
         parameterT += 1 / distance;
       }
       break;
@@ -104,6 +124,10 @@ private blackPixel = 0;
         this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1));
         this.context.fillRect(x1 + parameterM * parameterT, y1, 1, 1);
         this.context.fillStyle = 'red';
+        if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1))) {
+          this.distanceInMeters.solveDistance(x1, y1, x1 + parameterM * parameterT, y1);
+          this.distanceWallslist.push(this.distanceInMeters.getDistance());
+        }
         parameterT += 1 / distance;
       }
       break;
@@ -112,6 +136,10 @@ private blackPixel = 0;
         this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1));
         this.context.fillRect(x1 - parameterM * parameterT, y1, 1, 1);
         this.context.fillStyle = 'red';
+        if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1))) {
+          this.distanceInMeters.solveDistance(x1, y1, x1 - parameterM * parameterT, y1);
+          this.distanceWallslist.push(this.distanceInMeters.getDistance());
+        }
         parameterT += 1 / distance;
       }
       break;
@@ -128,16 +156,21 @@ private blackPixel = 0;
       checkBlackPixel = true;
     } else if ((pixel[3] !== 255) && (this.blackPixel > 0)) {
       ++this.numberOfWalls;
+      this.setNumberOfWalls(this.numberOfWalls);
       this.blackPixel = 0;
       checkBlackPixel = false;
+      return true;
     }
-    this.setNumberOfWalls(this.numberOfWalls);
+    return false;
   }
   setNumberOfWalls(numberOfWalls: number) {
     this.numberOfWalls = numberOfWalls;
   }
   getNumberOfWalls(): number {
     return this.numberOfWalls;
+  }
+  public getListOfWalls(): number[] {
+    return this.distanceWallslist;
   }
 
 }
