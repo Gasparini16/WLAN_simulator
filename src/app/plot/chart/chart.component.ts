@@ -40,7 +40,7 @@ export class ChartComponent implements OnInit {
       },
       series: [
         {
-          name: 'Attenuation'
+          name: 'Attenuation ' + this.results.propModel
         }
       ],
       xAxis: {

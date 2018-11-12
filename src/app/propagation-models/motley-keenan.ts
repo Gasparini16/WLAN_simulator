@@ -14,7 +14,7 @@ export class MotleyKeenan {
     let periodOfDistance: number = distance / 0.5;
     let pathLoss: number;
     let wallCounter = 0;
-    periodOfDistance = Math.round(periodOfDistance);
+    periodOfDistance = Math.round(periodOfDistance) + 1;
     this._realDistance[0] = 0;
     this._motleyKeenanPathLoss[0] = txPower;
     if (distanceWallsList.length > 0) {

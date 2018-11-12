@@ -21,6 +21,10 @@ export class ResultsService {
 
     private _pathLoss: number[] = [];
     private _distanceArray: number[] = [];
+    private _propModel: ModelsOfPropagation;
+     get propModel(): ModelsOfPropagation {
+       return this.txSettings.getPropagationModel();
+     }
     get distanceArray(): number[] {
       return this._distanceArray;
     }

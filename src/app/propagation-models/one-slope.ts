@@ -26,7 +26,7 @@ public solveOneMetterPathLoss(wavelength: number) {
    public solveOneSlope(distance: number, txPower: number) {
     let periodOfDistance: number = distance / 0.5;
     let pathLoss: number;
-    periodOfDistance = Math.round(periodOfDistance);
+    periodOfDistance = Math.round(periodOfDistance) + 1;
     this._realDistanceArray[0] = 0;
     this._oneSlopePathLossArray[0] = txPower;
     for (let i = 1; i <= periodOfDistance; i++) {

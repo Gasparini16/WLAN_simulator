@@ -27,9 +27,9 @@ export class Kamerman {
     public solveKamerman(distance: number, txPower: number) {
       let periodOfDistance: number = distance / 0.5;
       let pathLoss = 0;
-      periodOfDistance = Math.round(periodOfDistance);
       this._kamermanPathLoss[0] = txPower;
       this._realDistance[0] = 0;
+      periodOfDistance = Math.round(periodOfDistance) + 1;
        for (let i = 1; i <= periodOfDistance; i++) {
         if ((i * 0.5) <= 8) {
           pathLoss = txPower - (this.getOneMetterPathLoss() + this.pathLossExponnent[0] * 10 * Math.log10(i * 0.5));
