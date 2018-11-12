@@ -1,6 +1,13 @@
 <canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, $canvas)" (mousemove)="coordinates($event, $canvas)"></canvas>
 <p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
 <div>
-<button (click) ="onClickSolveDistance(clientXTransmitter, clientYTransmitter, clientXReceiver, clientYReceiver); drawLine()">Oblicz dystans</button>
+<button (click) ="onClickSolveDistance()">Oblicz dystans</button>
 </div>
 <p>{{ getSolvedDistance() | number: '2.1-2'}} metrów</p>
+<div>
+  <nav>
+    <a routerLink="/chart">Wyswietl wykres</a>
+  </nav>
+  <router-outlet></router-outlet>
+
+</div>

@@ -6,6 +6,7 @@ import { MotleyKeenan } from 'src/app/propagation-models/motley-keenan';
 import { SettingsService } from 'src/app/tx-settings/settings-service/settings.service';
 import { ModelsOfPropagation } from 'src/app/tx-settings/tx-settings-interface';
 import { DrawService } from 'src/app/indoor-map/hotelMap/drawService';
+import { Chart } from 'angular-highcharts';
 
 @Injectable({
   providedIn: 'root'
@@ -19,47 +20,53 @@ export class ResultsService {
     private txSettings: SettingsService,
     private dataFromDraw: DrawService) { }
 
-
-    private solvePathLoss() {
+    private chart: Chart;
+    private _pathLoss: number[] = [];
+    private _distanceArray: number[] = [];
+    get distanceArray(): number[] {
+      return this._distanceArray;
+    }
+    get pathLoss(): number[] {
+      return this._pathLoss;
+    }
+    solvePathLossPropagationModel() {
       const currentModel: ModelsOfPropagation = this.txSettings.getPropagationModel();
       const distance: number = this.distance.getDistance();
       const walls: number[] = this. dataFromDraw.getListOfWalls();
       const wavelength: number = this.txSettings.solveWaveLength(this.txSettings.getFrequency());
+      const power: number = this.txSettings.getTxPower();
+      const periodOfDistance: number = distance / 0.5;
+      Math.round(periodOfDistance);
+      console.log('Dystans: ' + distance + ' ' + periodOfDistance);
       switch (currentModel) {
-        case ModelsOfPropagation.kamerman:
-          this.kamerman.solveEightMetterPathLoss(wavelength);
-          this.kamerman.solveOneMetterPathLoss(wavelength);
-          this.kamerman.solveKamerman(distance);
-          break;
         case ModelsOfPropagation.oneSlope:
           this.oneSlope.solveOneMetterPathLoss(wavelength);
-          this.oneSlope.solveOneSlope(distance);
-          break;
-        case ModelsOfPropagation.motleyKeenan:
-          this.motleyKeenan.solveMotleyKeenan(distance, wavelength, walls);
-          break;
-      }
-    }
-    private getArrayOfPathLoss(): number[] {
-      const currentModel: ModelsOfPropagation = this.txSettings.getPropagationModel();
-      switch (currentModel) {
+          this.oneSlope.solveOneSlope(distance, power);
+          for (let i = 0; i < this.oneSlope.realDistanceArray.length; i++) {
+          this._pathLoss[i] = this.oneSlope.oneSlopePathLossArray[i];
+          this._distanceArray[i] = this.oneSlope.realDistanceArray[i];
+          }
+        break;
         case ModelsOfPropagation.kamerman:
-          return this.kamerman.getKamermanPathLoss();
-        case ModelsOfPropagation.oneSlope:
-          return this.oneSlope.getOneSlopePathLoss();
+        console.log(ModelsOfPropagation.kamerman);
+          this.kamerman.solveOneMetterPathLoss(wavelength);
+          this.kamerman.solveEightMetterPathLoss(wavelength);
+            this.kamerman.solveKamerman(distance, power);
+            console.log(this.kamerman.realDistance.length);
+            for (let i = 0; i < this.kamerman.realDistance.length; i++) {
+              this._pathLoss[i] = this.kamerman.kamermanPathLoss[i];
+              this._distanceArray[i] = this.kamerman.realDistance[i];
+              }
+        break;
         case ModelsOfPropagation.motleyKeenan:
-          return this.motleyKeenan.getMotleyKeenanPathLoss();
+        this.motleyKeenan.solveMotleyKeenan(distance, wavelength, walls, power);
+        console.log(walls);
+        for (let i = 0; i < this.motleyKeenan.realDistance.length; i++) {
+          this._pathLoss[i] = this.motleyKeenan.motleyKeenanPathLoss[i];
+          this._distanceArray[i] = this.motleyKeenan.realDistance[i];
+          }
+        break;
       }
     }
-    private getArrayOfRealDistance(): number[] {
-      const currentModel: ModelsOfPropagation = this.txSettings.getPropagationModel();
-      switch (currentModel) {
-        case ModelsOfPropagation.kamerman:
-          return this.kamerman.getKamermanRealDistanceArray();
-        case ModelsOfPropagation.oneSlope:
-          return this.oneSlope.getOneSlopeRealDistanceArray();
-        case ModelsOfPropagation.motleyKeenan:
-          return this.motleyKeenan.getMotleyKeenanRealDistanceArray();
-      }
-    }
+
 }

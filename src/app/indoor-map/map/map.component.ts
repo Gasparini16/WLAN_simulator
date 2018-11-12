@@ -52,13 +52,11 @@ export class MapComponent implements OnInit {
 
   onClickSolveDistance() {
     this.distance.solveDistance(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
+    this.drawHotel.solveEquation(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
     this.solvedDistance = this.distance.getDistance();
   }
   getSolvedDistance(): number {
     return this.solvedDistance;
   }
 
-  drawLine() {
-    this.drawHotel.solveEquation(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
-  }
 }
