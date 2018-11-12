@@ -45,7 +45,6 @@ export class Kamerman {
             this._realDistance[i] = i * 0.5;
           }
       }
-      console.log(this._kamermanPathLoss.length);
     }
     get kamermanPathLoss(): number [] {
       return this._kamermanPathLoss;

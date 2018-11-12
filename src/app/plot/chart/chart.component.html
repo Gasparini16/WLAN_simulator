@@ -1,5 +1,6 @@
 <div>
-  <button (click)="myChart()">Wykres</button>
-  <button (click)="count()">Oblicz</button>
+  <button (click)="init(); myChart()">Plot chart</button>
+  <button (click)="count()">Solve</button>
+  <button (click)="remove()">Remove series</button>
 </div>
 <div [chart]="chart"></div>

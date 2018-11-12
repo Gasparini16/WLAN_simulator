@@ -4,13 +4,22 @@
     <div class="row form-group">
       <div class="col-sm-3">
       <label>Tx Power [dBm]</label>
-      <input formControlName="txPower" type="text" class="form-control" placeholder="Tx power">
-      <p *ngIf="!txForm.get('txPower').valid && txForm.get('txPower').dirty" class="error">This field is required! Only numbers.</p>
+      <select formControlName="txPower" class="form-control">
+        <option>20</option>
+        <option>23</option>
+        <option>30</option>
+      </select>
       </div>
       <div class="col-sm-3">
-      <label>Frequency [GHz]</label>
-      <input formControlName="frequency" type="text" class="form-control" placeholder="Frequency">
-      <p *ngIf="!txForm.get('frequency').valid && txForm.get('frequency').dirty" class="error">This field is required! Only numbers.</p>
+      <label>Frequency [MHz]</label>
+      <select formControlName="frequency" class="form-control">
+        <option>2400</option>
+        <option>2485</option>
+        <option>5150</option>
+        <option>5350</option>
+        <option>5470</option>
+        <option>5725</option>
+      </select>
       </div>
     <div class="col-sm-3">
         <div class="form-group">
@@ -27,7 +36,5 @@
     <button (click)="resetForm()" class = "btn btn-dark">Reset</button>
 
   </form>
-  <pre>{{txForm.value |json}}</pre>
-  <pre>{{txForm.get('frequency').valid |json}}</pre>
 </div>
 

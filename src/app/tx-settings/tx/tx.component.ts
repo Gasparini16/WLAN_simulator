@@ -12,7 +12,6 @@ export class TxComponent implements OnInit {
   txForm: FormGroup;
   propModel = ModelsOfPropagation;
   submitted = false;
-
   constructor(
     private formBuilder: FormBuilder,
     private txSettings: SettingsService
@@ -31,19 +30,43 @@ export class TxComponent implements OnInit {
   }
 
   onSubmit() {
-    this.txSettings.setTxPower(parseInt(this.txForm.value.txPower, 10));
-    this.txSettings.setFrequency(parseInt(this.txForm.value.frequency, 10));
-    switch (this.txForm.value.propagationModel) {
-      case 'Kamerman':
-      this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
-      break;
-      case 'Motley-Keenan':
-      this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
-      break;
-      case 'One-Slope':
-      this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
-      break;
-    }
+     this.txSettings.setTxPower(parseInt(this.txForm.value.txPower, 10));
+     this.txSettings.setFrequency(parseInt(this.txForm.value.frequency, 10));
+     switch (this.txForm.value.propagationModel) {
+       case 'Kamerman':
+       this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
+       break;
+       case 'Motley-Keenan':
+       this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
+       break;
+       case 'One-Slope':
+       this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
+       break;
+     }
+    // this.txForm.get('txPower').valueChanges.subscribe((txpower: number) => {
+    //   this.txSettings.setTxPower(txpower);
+    // });
+    // this.txForm.get('frequency').valueChanges.subscribe((frequency: number) => {
+    //   this.txSettings.setFrequency(frequency);
+    // });
+    // switch (this.txForm.value.propagationModel) {
+    //   case 'Kamerman':
+    //   this.txForm.get('propagationModel').valueChanges.subscribe( () => {
+    //     this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
+    //   });
+    //   break;
+    //   case 'Motley-Keenan':
+    //   this.txForm.get('propagationModel').valueChanges.subscribe(() => {
+    //     this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
+    //   });
+    //   break;
+    //   case 'One-Slope':
+    //   this.txForm.get('propagationModel').valueChanges.subscribe(() => {
+    //     this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
+    //   });
+    //   break;
+    // }
+    console.log(this.txSettings.getFrequency());
   }
     resetForm() {
   this.txForm.reset();

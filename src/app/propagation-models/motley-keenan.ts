@@ -15,13 +15,11 @@ export class MotleyKeenan {
     let pathLoss: number;
     let wallCounter = 0;
     periodOfDistance = Math.round(periodOfDistance);
-    console.log(periodOfDistance);
     this._realDistance[0] = 0;
     this._motleyKeenanPathLoss[0] = txPower;
     if (distanceWallsList.length > 0) {
       isWallsListNotEmpty = true;
     }
-    console.log(isWallsListNotEmpty);
     switch (isWallsListNotEmpty) {
     case false:
       for ( let i = 1; i <= periodOfDistance; i++) {

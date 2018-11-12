@@ -1,10 +1,6 @@
 import { OnInit, Component } from '@angular/core';
 import { ResultsService } from '../results/results.service';
 import {Chart} from 'angular-highcharts';
-import { SettingsService } from 'src/app/tx-settings/settings-service/settings.service';
-import { DistanceService } from 'src/app/indoor-map/distance-algorithm/distanceService';
-import { OneSlope } from 'src/app/propagation-models/one-slope';
-import { DrawService } from 'src/app/indoor-map/hotelMap/drawService';
 
 @Component({
   selector: 'app-chart',
@@ -13,33 +9,50 @@ import { DrawService } from 'src/app/indoor-map/hotelMap/drawService';
 })
 export class ChartComponent implements OnInit {
   constructor(private results: ResultsService) {}
-  chart = new Chart({
-    chart: {
-      type: 'line'
-    },
-    title: {
-      text: 'Path loss'
-    },
-    credits: {
-      enabled: false
-    },
-    series: [
-      {
-        name: 'Line 1'
-      }
-    ]
-  });
+ chart: Chart;
 
   ngOnInit() {
+    this.init();
   }
   myChart() {
      if (this.results.distanceArray.length === this.results.pathLoss.length) {
        for (let i = 0; i < this.results.distanceArray.length; i++) {
-         this.chart.addPoint([this.results.distanceArray[i], this.results.pathLoss[i]]);
+         this.chart.addPoint([this.results.distanceArray[i], this.results.pathLoss[i]], 0);
        }
      }
   }
   count() {
     this.results.solvePathLossPropagationModel();
+  }
+  remove() {
+     this.chart.removeSerie(this.chart.ref.series.length - 1);
+  }
+  init() {
+     this.chart = new Chart({
+      chart: {
+        type: 'line',
+      },
+      title: {
+        text: 'Path loss'
+      },
+      credits: {
+        enabled: false
+      },
+      series: [
+        {
+          name: 'Attenuation'
+        }
+      ],
+      xAxis: {
+        title: {
+          text: 'distance [m]'
+      }},
+      yAxis: {
+        title: {
+          text: 'Power level [dBm]'
+        }
+      }
+    });
+    this.chart.ref$.subscribe(console.log);
   }
 }
