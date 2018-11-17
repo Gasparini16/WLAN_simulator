@@ -23,9 +23,9 @@ export class TxComponent implements OnInit {
 
   buildTxForm() {
     return this.formBuilder.group({
-      txPower: ['', [Validators.required, Validators.pattern('[0-9]*$')]],
-      frequency: ['', [Validators.required, Validators.pattern('[0-9]*$')]],
-      propagationModel: ['', Validators.required]
+      txPower: ['20', [Validators.required, Validators.pattern('[0-9]*$')]],
+      frequency: ['2412', [Validators.required, Validators.pattern('[0-9]*$')]],
+      propagationModel: ['Kamerman', Validators.required]
     });
   }
 
