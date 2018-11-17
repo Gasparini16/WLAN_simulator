@@ -6,6 +6,9 @@ import { MotleyKeenan } from 'src/app/propagation-models/motley-keenan';
 import { SettingsService } from 'src/app/tx-settings/settings-service/settings.service';
 import { ModelsOfPropagation } from 'src/app/tx-settings/tx-settings-interface';
 import { DrawService } from 'src/app/indoor-map/hotelMap/drawService';
+import {DomSanitizer} from '@angular/platform-browser';
+import { saveAs} from 'file-saver';
+import { FileSaverDirective } from 'ngx-filesaver';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +25,7 @@ export class ResultsService {
     private _pathLoss: number[] = [];
     private _distanceArray: number[] = [];
     private _propModel: ModelsOfPropagation;
+    fileUrl;
      get propModel(): ModelsOfPropagation {
        return this.txSettings.getPropagationModel();
      }
@@ -67,5 +71,11 @@ export class ResultsService {
         break;
       }
     }
+
+    // saveToFileSystem() {
+    //   const data = 'test';
+    //   const blob = new Blob([data], {type: 'application/octet-stream'});
+    //   saveAs(blob, 'test.txt');
+    // }
 
 }

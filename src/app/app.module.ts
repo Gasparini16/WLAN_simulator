@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropagationModelsModule } from './propagation-models/propagation-models.module';
 import { ChartModule } from 'angular-highcharts';
 import { PlotModule } from './plot/plot.module';
+import {FileSaverModule} from 'ngx-filesaver';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PlotModule } from './plot/plot.module';
     PropagationModelsModule,
     ReactiveFormsModule,
     ChartModule,
-    PlotModule
+    PlotModule,
+    FileSaverModule
   ],
   providers: [],
   bootstrap: [AppComponent]

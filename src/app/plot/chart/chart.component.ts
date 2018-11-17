@@ -33,7 +33,7 @@ export class ChartComponent implements OnInit {
         type: 'line',
       },
       title: {
-        text: 'Path loss'
+        text: 'Power level'
       },
       credits: {
         enabled: false
