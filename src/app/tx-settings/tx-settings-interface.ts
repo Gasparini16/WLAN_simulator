@@ -4,8 +4,8 @@ export enum ModelsOfPropagation {
   motleyKeenan = 'MOTLEY-KEENAN'
 }
 // export interface TxSetUp {
-//   txPower: number;
-//   frequency: number;
+//    txPower: number;
+//    frequency: number;
 //   propagationModel: ModelsOfPropagation;
 
 //   setTxPower(txPower: number);

@@ -1,39 +1,56 @@
 <p class="settings-header">Tx settings</p>
 <div class="settings-container">
   <form (ngSubmit)="onSubmit()" [formGroup]="txForm">
-    <div class="row form-group">
-      <div class="col-sm-3">
-      <label>Tx Power [dBm]</label>
-      <select formControlName="txPower" class="form-control">
-        <option>20</option>
-        <option>23</option>
-        <option>30</option>
-      </select>
-      </div>
-      <div class="col-sm-3">
-      <label>Frequency [MHz]</label>
-      <select formControlName="frequency" class="form-control">
-        <option>2400</option>
-        <option>2485</option>
-        <option>5150</option>
-        <option>5350</option>
-        <option>5470</option>
-        <option>5725</option>
-      </select>
-      </div>
-    <div class="col-sm-3">
-        <div class="form-group">
-          <label>Propagation Model</label>
-          <select formControlName="propagationModel" class="form-control">
-            <option>Kamerman</option>
-            <option>Motley-Keenan</option>
-            <option>One-Slope</option>
+      <div class="row form-group">
+          <div class = "col-sm-3">
+            <label>Propagation Model</label>
+            <select formControlName="propagationModel" class="form-control">
+              <option>Kamerman</option>
+              <option>Motley-Keenan</option>
+              <option>One-Slope</option>
+            </select>
+          </div>
+        </div>
+        <span class="input-group-btn">
+            <button class="button" class="btn btn-primary" (click)="addTransceiver()" [disabled]="txSettingsArrayLength > 1">
+              Add Transceiver
+            </button>
+          </span>
+            <span class="input-group-btn">
+                <button class="button" class="btn btn-primary ml-2" (click)="removeTransceiver()">
+                  Remove Transceiver
+                </button>
+              </span>
+    <div formArrayName="settings">
+      <div *ngFor="let settings of txForm.get('settings')['controls']; let i = index">
+        <div [formGroupName]="i" class="form-row">
+          <div class="col-sm">
+          <label>Tx Power [dBm]</label>
+          <select formControlName="txPower" class="form-control">
+            <option>20</option>
+            <option>23</option>
+            <option>30</option>
           </select>
+          </div>
+          <div class="col-sm">
+          <label>Frequency [MHz]</label>
+          <select formControlName="frequency" class="form-control">
+            <option>2412</option>
+            <option>2432</option>
+            <option>2452</option>
+            <option>5180</option>
+            <option>5200</option>
+            <option>5220</option>
+          </select>
+          </div>
+          <div class="col-sm d-flex justify-content-between">
+              <button type="button" class="btn btn-primary mb-2 mt-2 ">Add this transceiver</button>
+              </div>
         </div>
       </div>
     </div>
     <button type = "submit" [disabled]="!txForm.valid" class="btn btn-success">Submit</button>
-    <button (click)="resetForm()" class = "btn btn-dark">Reset</button>
+    <button (click)="resetForm()" class = "btn btn-dark ml-2">Reset</button>
 
   </form>
 </div>
