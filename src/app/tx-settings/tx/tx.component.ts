@@ -56,7 +56,7 @@ export class TxComponent implements OnInit {
     frequency: new FormControl ( '2412')
   });
  }
- addTransceiver(): void {
+ addNewFormTransceiver(): void {
    const array = <FormArray>this.txForm.get('settings');
    array.push(this.createTransceiver());
     ++this.txSettingsArrayLength;
@@ -67,24 +67,28 @@ export class TxComponent implements OnInit {
    array.removeAt(length - 1);
    --this.txSettingsArrayLength;
  }
-//  onAddNewTransceiver(): void {
-//   const array = <FormArray>this.txForm.get('settings');
-//   for ( let i = 0; i < array.length; i++) {
-//    const txPower: number = parseInt(array.at(i).get('txPower').value, 10);
-//    const frequency: number = parseInt(array.at(i).get('frequency').value, 10);
-//    let propModel: ModelsOfPropagation;
-//    switch (this.txForm.value.propagationModel) {
-//     case 'Kamerman':
-//     propModel = ModelsOfPropagation.kamerman;
-//     break;
-//     case 'Motley-Keenan':
-//     propModel = ModelsOfPropagation.motleyKeenan;
-//     break;
-//     case 'One-Slope':
-//     propModel = ModelsOfPropagation.oneSlope;
-//     break;
-//   }
-//   this.txSettings.addTransceiver(txPower, frequency, propModel);
-//   }
-//  }
+ onAddNewTransceiver(): void {
+  const array = <FormArray>this.txForm.get('settings');
+  for ( let i = 0; i < this.txSettingsArrayLength; i++) {
+   const txPower: number = parseInt(array.at(i).get('txPower').value, 10);
+   const frequency: number = parseInt(array.at(i).get('frequency').value, 10);
+   let propModel: ModelsOfPropagation;
+   switch (this.txForm.value.propagationModel) {
+    case 'Kamerman':
+    propModel = ModelsOfPropagation.kamerman;
+    break;
+    case 'Motley-Keenan':
+    propModel = ModelsOfPropagation.motleyKeenan;
+    break;
+    case 'One-Slope':
+    propModel = ModelsOfPropagation.oneSlope;
+    break;
+  }
+  this.txSettings.addTransceiver(txPower, frequency, propModel);
+  }
+  console.log('Array:' + array.length);
+  console.log('Tablica obiektow:' + this.txSettings.getTransceivers().length);
+  console.log(array);
+  console.log('tablica:'+ this.txSettings.getTransceivers());
+ }
 }

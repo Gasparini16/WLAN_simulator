@@ -1,6 +1,6 @@
 <p class="settings-header">Tx settings</p>
 <div class="settings-container">
-  <form (ngSubmit)="onSubmit()" [formGroup]="txForm">
+  <form (ngSubmit)="onAddNewTransceiver()" [formGroup]="txForm">
       <div class="row form-group">
           <div class = "col-sm-3">
             <label>Propagation Model</label>
@@ -12,12 +12,12 @@
           </div>
         </div>
         <span class="input-group-btn">
-            <button class="button" class="btn btn-primary" (click)="addTransceiver()" [disabled]="txSettingsArrayLength > 1">
+            <button class="button" class="btn btn-primary" (click)="addNewFormTransceiver()" [disabled]="txSettingsArrayLength > 1">
               Add Transceiver
             </button>
           </span>
             <span class="input-group-btn">
-                <button class="button" class="btn btn-primary ml-2" (click)="removeTransceiver()">
+                <button class="button" class="btn btn-primary ml-2" (click)="removeTransceiver()" [disabled]="txSettingsArrayLength === 0">
                   Remove Transceiver
                 </button>
               </span>

@@ -58,5 +58,4 @@ export class MapComponent implements OnInit {
   getSolvedDistance(): number {
     return this.solvedDistance;
   }
-
 }
