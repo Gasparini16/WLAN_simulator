@@ -43,29 +43,6 @@ export class TxComponent implements OnInit {
        this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
        break;
      }
-    // this.txForm.get('txPower').valueChanges.subscribe((txpower: number) => {
-    //   this.txSettings.setTxPower(txpower);
-    // });
-    // this.txForm.get('frequency').valueChanges.subscribe((frequency: number) => {
-    //   this.txSettings.setFrequency(frequency);
-    // });
-    // switch (this.txForm.value.propagationModel) {
-    //   case 'Kamerman':
-    //   this.txForm.get('propagationModel').valueChanges.subscribe( () => {
-    //     this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
-    //   });
-    //   break;
-    //   case 'Motley-Keenan':
-    //   this.txForm.get('propagationModel').valueChanges.subscribe(() => {
-    //     this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
-    //   });
-    //   break;
-    //   case 'One-Slope':
-    //   this.txForm.get('propagationModel').valueChanges.subscribe(() => {
-    //     this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
-    //   });
-    //   break;
-    // }
     console.log(this.txSettings.getFrequency());
   }
     resetForm() {

@@ -1,12 +1,12 @@
 <canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, $canvas)" (mousemove)="coordinates($event, $canvas)"></canvas>
 <p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
 <div>
-<button (click) ="onClickSolveDistance()">Solve distance</button>
+<button type="button" class="btn btn-primary ml-2" (click) ="onClickSolveDistance()">Solve distance</button>
 </div>
 <p>{{ getSolvedDistance() | number: '2.1-2'}} m</p>
 <div>
   <nav>
-    <a routerLink="/chart"><button>Chart</button></a>
+    <a routerLink="/chart"><button type="button" class="btn btn-primary ml-2 mb-2">Chart</button></a>
   </nav>
 
 </div>

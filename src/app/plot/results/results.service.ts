@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 import { DistanceService } from 'src/app/indoor-map/distance-algorithm/distanceService';
 import { Kamerman } from 'src/app/propagation-models/kamerman';
 import { OneSlope } from 'src/app/propagation-models/one-slope';
@@ -72,10 +72,15 @@ export class ResultsService {
       }
     }
 
-    // saveToFileSystem() {
-    //   const data = 'test';
-    //   const blob = new Blob([data], {type: 'application/octet-stream'});
-    //   saveAs(blob, 'test.txt');
-    // }
+    saveToFileSystem() {
+      let data = '';
+     data += (this.txSettings.getPropagationModel().toString() + '\r\n');
+     data += ('Distance [m]' + '\  ' + 'Power level [dBm]' + '\r\n');
+      for (let i = 0; i < this.distanceArray.length; i++) {
+         data += (this._distanceArray[i].toString() + '\              ' + this._pathLoss[i].toString() + '\r\n');
+      }
+      const blob = new Blob([data], {type: 'text/plain'});
+      saveAs(blob, 'propResults.txt');
+    }
 
 }

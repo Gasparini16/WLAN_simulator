@@ -55,4 +55,7 @@ export class ChartComponent implements OnInit {
     });
     this.chart.ref$.subscribe(console.log);
   }
+  export() {
+    this.results.saveToFileSystem();
+  }
 }

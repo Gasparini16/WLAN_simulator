@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DistanceService } from '../distance-algorithm/distanceService';
 import { DrawService } from '../hotelMap/drawService';
 
@@ -19,6 +19,7 @@ export class MapComponent implements OnInit {
  clientX = 0;
  clientY = 0;
  solvedDistance: number;
+ imageSrc: string;
 
   constructor(private distance: DistanceService,
     private drawHotel: DrawService ) {}
@@ -58,5 +59,4 @@ export class MapComponent implements OnInit {
   getSolvedDistance(): number {
     return this.solvedDistance;
   }
-
 }
