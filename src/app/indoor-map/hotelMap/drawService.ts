@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import { angularMath } from 'angular-ts-math';
 import { DistanceService } from '../distance-algorithm/distanceService';
+import { TypesOfWalls } from './types-of-walls.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,18 @@ private  context: CanvasRenderingContext2D;
 private numberOfWalls;
 private blackPixel = 0;
 private distanceWallslist: number[] = [];
+private lengthBlackPixel = 0;
+
+private readonly wallAttenuationsFor2_4GHz: number [] = [0.5, 4.5, 6.7];
+private readonly wallAttenuationsFor5Ghz: number [] = [0.5, 14.6, 10.3];
+ private _typesOfWalls: TypesOfWalls [] = [];
+
+ get typesOfWalls(): TypesOfWalls [] {
+   return this._typesOfWalls;
+ }
+
+  public setWallAttenuation(frequency: number) {
+  }
 
   drawHotelMap() {
     this.canvas = <HTMLCanvasElement> document.getElementById('hotelMap');
@@ -23,8 +36,10 @@ private distanceWallslist: number[] = [];
     };
   }
   solveEquation(x1: number, y1: number, x2: number, y2: number) {
+    this._typesOfWalls = [];
     this.setNumberOfWalls(0);
     const a = (y2 - y1) / (x2 - x1); // y=ax+b
+    const angle = Math.atan(a);
     const b = y1 - a * x1;
     const distanceInPixel = this.distanceService.getDistanceInPixel();
     this.canvas = <HTMLCanvasElement> document.getElementById('hotelMap');
@@ -76,6 +91,17 @@ private distanceWallslist: number[] = [];
           this.context.fillStyle = 'red';
           if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1 + parameterN * parameterT))) {
             this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1 + parameterN * parameterT);
+            const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+            if ((wallThickness > 0) && (wallThickness < 2)) {
+              this._typesOfWalls.push(TypesOfWalls.drywall);
+            }
+            if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+              this._typesOfWalls.push(TypesOfWalls.redBrick);
+            }
+            if (wallThickness > 3.75) {
+              this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+            }
+            this.lengthBlackPixel = 0;
             this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
@@ -87,6 +113,17 @@ private distanceWallslist: number[] = [];
         this.context.fillStyle = 'red';
         if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1 - parameterN * parameterT))) {
           this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1 - parameterN * parameterT);
+          const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+          if ((wallThickness > 0) && (wallThickness < 2)) {
+            this._typesOfWalls.push(TypesOfWalls.drywall);
+          }
+          if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+            this._typesOfWalls.push(TypesOfWalls.redBrick);
+          }
+          if (wallThickness > 3.75) {
+            this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+          }
+          this.lengthBlackPixel = 0;
           this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
         }
         parameterT += 1 / distanceInPixel;
@@ -98,6 +135,17 @@ private distanceWallslist: number[] = [];
         this.context.fillStyle = 'red';
         if (this.checkPixel(this.getPixelColor(x1, y1 + parameterN * parameterT))) {
           this.distanceService.solveDistance(x1, y1, x1, y1 + parameterN * parameterT);
+          const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+          if ((wallThickness > 0) && (wallThickness < 2)) {
+            this._typesOfWalls.push(TypesOfWalls.drywall);
+          }
+          if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+            this._typesOfWalls.push(TypesOfWalls.redBrick);
+          }
+          if (wallThickness > 3.75) {
+            this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+          }
+          this.lengthBlackPixel = 0;
           this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
         }
         parameterT += 1 / distanceInPixel;
@@ -109,6 +157,17 @@ private distanceWallslist: number[] = [];
         this.context.fillStyle = 'red';
         if (this.checkPixel(this.getPixelColor(x1, y1 - parameterN * parameterT))) {
           this.distanceService.solveDistance(x1, y1, x1, y1 - parameterN * parameterT);
+          const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+          if ((wallThickness > 0) && (wallThickness < 2)) {
+            this._typesOfWalls.push(TypesOfWalls.drywall);
+          }
+          if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+            this._typesOfWalls.push(TypesOfWalls.redBrick);
+          }
+          if (wallThickness > 3.75) {
+            this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+          }
+          this.lengthBlackPixel = 0;
           this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
         }
         parameterT += 1 / distanceInPixel;
@@ -120,6 +179,17 @@ private distanceWallslist: number[] = [];
         this.context.fillStyle = 'red';
         if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1))) {
           this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1);
+          const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+            if ((wallThickness > 0) && (wallThickness < 2)) {
+              this._typesOfWalls.push(TypesOfWalls.drywall);
+            }
+            if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+              this._typesOfWalls.push(TypesOfWalls.redBrick);
+            }
+            if (wallThickness > 3.75) {
+              this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+            }
+            this.lengthBlackPixel = 0;
           this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
         }
         parameterT += 1 / distanceInPixel;
@@ -131,6 +201,17 @@ private distanceWallslist: number[] = [];
         this.context.fillStyle = 'red';
         if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1))) {
           this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1);
+          const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
+          if ((wallThickness > 0) && (wallThickness < 2)) {
+            this._typesOfWalls.push(TypesOfWalls.drywall);
+          }
+          if ((wallThickness >= 2) && (wallThickness <= 3.75)) {
+            this._typesOfWalls.push(TypesOfWalls.redBrick);
+          }
+          if (wallThickness > 3.75) {
+            this._typesOfWalls.push(TypesOfWalls.cinderBlock);
+          }
+          this.lengthBlackPixel = 0;
           this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
         }
         parameterT += 1 / distanceInPixel;
@@ -148,6 +229,7 @@ private distanceWallslist: number[] = [];
       ++this.blackPixel;
       checkBlackPixel = true;
     } else if ((pixel[3] !== 255) && (this.blackPixel > 0)) {
+      this.lengthBlackPixel = this.blackPixel;
       ++this.numberOfWalls;
       this.setNumberOfWalls(this.numberOfWalls);
       this.blackPixel = 0;
