@@ -36,14 +36,13 @@ export class TxComponent implements OnInit {
        case 'Kamerman':
        this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);
        break;
-       case 'Motley-Keenan':
-       this.txSettings.setPropagationModel(ModelsOfPropagation.motleyKeenan);
+       case 'Multi-Wall':
+       this.txSettings.setPropagationModel(ModelsOfPropagation.multiWall);
        break;
        case 'One-Slope':
        this.txSettings.setPropagationModel(ModelsOfPropagation.oneSlope);
        break;
      }
-    console.log(this.txSettings.getFrequency());
   }
     resetForm() {
   this.txForm.reset();

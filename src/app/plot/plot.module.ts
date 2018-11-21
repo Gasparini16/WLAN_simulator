@@ -11,6 +11,7 @@ import { ChartModule } from 'angular-highcharts';
     AppRoutingModule,
     ChartModule
   ],
-  declarations: [ChartComponent]
+  declarations: [ChartComponent],
+  exports: [ChartComponent]
 })
 export class PlotModule { }

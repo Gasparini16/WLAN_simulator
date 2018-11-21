@@ -18,6 +18,7 @@ export class ChartComponent implements OnInit {
      if (this.results.distanceArray.length === this.results.pathLoss.length) {
        for (let i = 0; i < this.results.distanceArray.length; i++) {
          this.chart.addPoint([this.results.distanceArray[i], this.results.pathLoss[i]], 0);
+         this.chart.addPoint([this.results.distanceArray[i], -97], 1);
        }
      }
   }
@@ -41,13 +42,18 @@ export class ChartComponent implements OnInit {
       series: [
         {
           name: 'Attenuation ' + this.results.propModel
+        },
+        {
+          name: 'Min Power Level [dBm]'
         }
       ],
       xAxis: {
+        gridLineWidth: 1,
         title: {
           text: 'distance [m]'
       }},
       yAxis: {
+        gridLineWidth: 1,
         title: {
           text: 'Power level [dBm]'
         }

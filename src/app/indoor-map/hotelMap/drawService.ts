@@ -23,8 +23,6 @@ private readonly wallAttenuationsFor5Ghz: number [] = [0.5, 14.6, 10.3];
    return this._typesOfWalls;
  }
 
-  public setWallAttenuation(frequency: number) {
-  }
 
   drawHotelMap() {
     this.canvas = <HTMLCanvasElement> document.getElementById('hotelMap');

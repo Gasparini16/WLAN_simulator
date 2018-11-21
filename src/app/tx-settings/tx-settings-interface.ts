@@ -1,7 +1,7 @@
 export enum ModelsOfPropagation {
   kamerman = 'KAMERMAN',
   oneSlope = 'ONE-SLOPE',
-  motleyKeenan = 'MOTLEY-KEENAN'
+  multiWall = 'Multi-Wall'
 }
 // export interface TxSetUp {
 //   txPower: number;

@@ -2,13 +2,12 @@ import { Injectable, SystemJsNgModuleLoader } from '@angular/core';
 import { DistanceService } from 'src/app/indoor-map/distance-algorithm/distanceService';
 import { Kamerman } from 'src/app/propagation-models/kamerman';
 import { OneSlope } from 'src/app/propagation-models/one-slope';
-import { MotleyKeenan } from 'src/app/propagation-models/motley-keenan';
 import { SettingsService } from 'src/app/tx-settings/settings-service/settings.service';
 import { ModelsOfPropagation } from 'src/app/tx-settings/tx-settings-interface';
 import { DrawService } from 'src/app/indoor-map/hotelMap/drawService';
-import {DomSanitizer} from '@angular/platform-browser';
 import { saveAs} from 'file-saver';
-import { FileSaverDirective } from 'ngx-filesaver';
+import { TypesOfWalls } from 'src/app/indoor-map/hotelMap/types-of-walls.enum';
+import { MultiWall } from 'src/app/propagation-models/multi-wall';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class ResultsService {
     private distance: DistanceService,
     private kamerman: Kamerman,
     private oneSlope: OneSlope,
-    private motleyKeenan: MotleyKeenan,
+    private multiWall: MultiWall,
     private txSettings: SettingsService,
     private dataFromDraw: DrawService) { }
 
@@ -41,6 +40,8 @@ export class ResultsService {
       const walls: number[] = this. dataFromDraw.getListOfWalls();
       const wavelength: number = this.txSettings.solveWaveLength(this.txSettings.getFrequency());
       const power: number = this.txSettings.getTxPower();
+      const frequency: number = this.txSettings.getFrequency();
+      const typesOfWalls: TypesOfWalls[] = this.dataFromDraw.typesOfWalls;
       const periodOfDistance: number = distance / 0.5;
       Math.round(periodOfDistance);
       switch (currentModel) {
@@ -61,12 +62,12 @@ export class ResultsService {
               this._distanceArray[i] = this.kamerman.realDistance[i];
               }
         break;
-        case ModelsOfPropagation.motleyKeenan:
-        this.motleyKeenan.solveMotleyKeenan(distance, wavelength, walls, power);
+        case ModelsOfPropagation.multiWall:
+        this.multiWall.solveMultiWall(distance, wavelength, walls, power, typesOfWalls, frequency);
         console.log(walls);
-        for (let i = 0; i < this.motleyKeenan.realDistance.length; i++) {
-          this._pathLoss[i] = this.motleyKeenan.motleyKeenanPathLoss[i];
-          this._distanceArray[i] = this.motleyKeenan.realDistance[i];
+        for (let i = 0; i < this.multiWall.realDistance.length; i++) {
+          this._pathLoss[i] = this.multiWall.multiWallPathLoss[i];
+          this._distanceArray[i] = this.multiWall.realDistance[i];
           }
         break;
       }

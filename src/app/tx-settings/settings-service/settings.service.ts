@@ -41,6 +41,6 @@ public setTxPower(txPower: number) {
  }
  public solveWaveLength(frequency: number): number {
     const waveLength = 300 / frequency;
-    return Math.round(waveLength * 10) / 10;
+    return waveLength;
  }
 }
