@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import { angularMath } from 'angular-ts-math';
 import { DistanceService } from '../distance-algorithm/distanceService';
 import { TypesOfWalls } from './types-of-walls.enum';
 
@@ -14,9 +13,6 @@ private numberOfWalls;
 private blackPixel = 0;
 private distanceWallslist: number[] = [];
 private lengthBlackPixel = 0;
-
-private readonly wallAttenuationsFor2_4GHz: number [] = [0.5, 4.5, 6.7];
-private readonly wallAttenuationsFor5Ghz: number [] = [0.5, 14.6, 10.3];
  private _typesOfWalls: TypesOfWalls [] = [];
 
  get typesOfWalls(): TypesOfWalls [] {
@@ -218,20 +214,16 @@ private readonly wallAttenuationsFor5Ghz: number [] = [0.5, 14.6, 10.3];
     }
   }
   getPixelColor(cordinateX: number, cordinateY: number) {
-    const pixel = this.context.getImageData(cordinateX, cordinateY, 1, 1).data;
-    return pixel;
+    return this.context.getImageData(cordinateX, cordinateY, 1, 1).data;
   }
   checkPixel(pixel: Uint8ClampedArray) {
-    let checkBlackPixel = false;
     if (pixel[3] === 255) {
       ++this.blackPixel;
-      checkBlackPixel = true;
     } else if ((pixel[3] !== 255) && (this.blackPixel > 0)) {
       this.lengthBlackPixel = this.blackPixel;
       ++this.numberOfWalls;
       this.setNumberOfWalls(this.numberOfWalls);
       this.blackPixel = 0;
-      checkBlackPixel = false;
       return true;
     }
     return false;
