@@ -35,4 +35,12 @@ public solveOneMetterPathLoss(wavelength: number) {
     this._realDistanceArray[i] = i * 0.5;
     }
   }
+  public solveOnSpecialDistance(distance: number, txPower: number): number {
+    return (txPower - Math.round((this.getOneMetterPathLoss() + 33 * Math.log10(distance)) * 10) / 10);
+  }
+
+  public clearResultsArrays() {
+  this._oneSlopePathLossArray.slice(0,this._oneSlopePathLossArray.length);
+  this._realDistanceArray.slice(0,this._realDistanceArray.length);
+  }
 }

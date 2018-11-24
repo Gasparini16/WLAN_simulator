@@ -77,4 +77,9 @@ export class MultiWall {
   get realDistance(): number [] {
     return this._realDistance;
   }
+  public clearResultsArrays() {
+    this._multiWallPathLoss.slice(0,this._multiWallPathLoss.length);
+    this._realDistance.slice(0,this._realDistance.length);
+  }
+
 }

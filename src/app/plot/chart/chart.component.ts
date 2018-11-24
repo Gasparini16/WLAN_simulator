@@ -64,4 +64,8 @@ export class ChartComponent implements OnInit {
   export() {
     this.results.saveToFileSystem();
   }
+  clearSolvedResults() {
+    this.results.clearAllResults();
+    this.chart.destroy();
+  }
 }

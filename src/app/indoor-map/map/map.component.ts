@@ -19,13 +19,13 @@ export class MapComponent implements OnInit {
  clientX = 0;
  clientY = 0;
  solvedDistance: number;
- imageSrc: string;
 
   constructor(private distance: DistanceService,
     private drawHotel: DrawService ) {}
 
   ngOnInit() {
     this.drawHotel.drawHotelMap();
+    this.onClickSolveDistance();
   }
 
   coordinates(event: MouseEvent, canvas: HTMLCanvasElement): void {
@@ -54,9 +54,12 @@ export class MapComponent implements OnInit {
   onClickSolveDistance() {
     this.distance.solveDistance(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
     this.drawHotel.solveEquation(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
-    this.solvedDistance = this.distance.getDistance();
+    this.distance.getSubDistance().subscribe(data => {
+      this.solvedDistance = data;
+      console.log(this.solvedDistance);
+    });
   }
-  getSolvedDistance(): number {
+  getSolvedDistance() {
     return this.solvedDistance;
   }
 }
