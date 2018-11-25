@@ -1,25 +1,26 @@
-import { Injectable } from '@angular/core';
-import { TypesOfWalls } from '../indoor-map/hotelMap/types-of-walls.enum';
+import {Injectable} from '@angular/core';
+import {TypesOfWalls} from '../indoor-map/hotelMap/types-of-walls.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MultiWall {
-  constructor () {}
+  constructor() {
+  }
+
   private _realDistance: number [] = [];
   private _multiWallPathLoss: number [] = [];
 
 
   public solveMultiWall(distance: number, wavelength: number, distanceWallsList: number[], txPower: number,
-    typesOfWalls: TypesOfWalls[], frequency: number) {
-      let wallsAttenuationArray: number [] = [];
-      console.log(typesOfWalls.length);
-      if ((frequency > 2400) && (frequency < 5000)) {
-         wallsAttenuationArray = [0.5, 4.5, 6.7];
-      }
-      if (frequency > 5000) {
-         wallsAttenuationArray = [0.5, 14.6, 10.3];
-      }
+                        typesOfWalls: TypesOfWalls[], frequency: number) {
+    let wallsAttenuationArray: number [] = [];
+    if ((frequency > 2400) && (frequency < 5000)) {
+      wallsAttenuationArray = [0.5, 4.5, 6.7];
+    }
+    if (frequency > 5000) {
+      wallsAttenuationArray = [0.5, 14.6, 10.3];
+    }
     let isWallsListNotEmpty = false;
     let periodOfDistance: number = distance / 0.5;
     let pathLoss: number;
@@ -33,53 +34,106 @@ export class MultiWall {
       isWallsListNotEmpty = true;
     }
     switch (isWallsListNotEmpty) {
-    case false:
-      for ( let i = 1; i <= periodOfDistance; i++) {
-        pathLoss = txPower - ( 20 * Math.log10((4 * Math.PI * i * 0.5) / wavelength));
-        this._multiWallPathLoss[i] = Math.round(pathLoss * 10) / 10;
-        this._realDistance [i] = i * 0.5;
-    }
-    break;
-    case true:
-      for ( let i = 1; i <= periodOfDistance; i++) {
-          for ( let j = 0; j < distanceWallsList.length; j++) {
-            if (((i * 0.5 ) <= distanceWallsList[j]) && ((i * 0.5 + 0.5) >= distanceWallsList[j])) {
+      case false:
+        for (let i = 1; i <= periodOfDistance; i++) {
+          pathLoss = txPower - (20 * Math.log10((4 * Math.PI * i * 0.5) / wavelength));
+          this._multiWallPathLoss[i] = Math.round(pathLoss * 10) / 10;
+          this._realDistance [i] = i * 0.5;
+        }
+        break;
+      case true:
+        for (let i = 1; i <= periodOfDistance; i++) {
+          for (let j = 0; j < distanceWallsList.length; j++) {
+            if (((i * 0.5) <= distanceWallsList[j]) && ((i * 0.5 + 0.5) >= distanceWallsList[j])) {
               const sumCounter: number = drywallCounter + redBrickCounter + cinderBlockCounter;
               if (sumCounter < typesOfWalls.length) {
-              const typeOfWall: string = typesOfWalls[j];
-              console.log(typeOfWall);
+                const typeOfWall: string = typesOfWalls[j];
+                console.log(typeOfWall);
                 switch (typeOfWall) {
                   case 'DRYWALL':
                     ++drywallCounter;
-                  break;
+                    break;
                   case'RED-BRICK':
                     ++redBrickCounter;
-                  break;
+                    break;
                   case 'CINDER-BLOCK':
                     ++cinderBlockCounter;
-                  break;
+                    break;
                 }
               }
             }
           }
           console.log(drywallCounter + ' ' + redBrickCounter + ' ' + cinderBlockCounter);
-          pathLoss = txPower - ( 20 * Math.log10((4 * Math.PI * i * 0.5) / wavelength) + (drywallCounter * wallsAttenuationArray[0]
+          pathLoss = txPower - (20 * Math.log10((4 * Math.PI * i * 0.5) / wavelength) + (drywallCounter * wallsAttenuationArray[0]
             + redBrickCounter * wallsAttenuationArray[1] + cinderBlockCounter * wallsAttenuationArray[2]));
-            this._multiWallPathLoss[i] = Math.round(pathLoss * 10) / 10;
-            this._realDistance [i] = i * 0.5;
-      }
-    break;
+          this._multiWallPathLoss[i] = Math.round(pathLoss * 10) / 10;
+          this._realDistance [i] = i * 0.5;
+        }
+        break;
+    }
   }
-}
+
   get multiWallPathLoss(): number [] {
     return this._multiWallPathLoss;
   }
+
   get realDistance(): number [] {
     return this._realDistance;
   }
+
   public clearResultsArrays() {
-    this._multiWallPathLoss.slice(0,this._multiWallPathLoss.length);
-    this._realDistance.slice(0,this._realDistance.length);
+    this._multiWallPathLoss.slice(0, this._multiWallPathLoss.length);
+    this._realDistance.slice(0, this._realDistance.length);
   }
 
+  public solveOnSpecialDistance(distance: number, txPower: number, typesOfWalls: TypesOfWalls[],
+                                distanceWallsList: number[], frequency: number, wavelength: number) {
+    let wallsAttenuationArray: number [] = [];
+    if ((frequency > 2400) && (frequency < 5000)) {
+      wallsAttenuationArray = [0.5, 4.5, 6.7];
+    }
+    if (frequency > 5000) {
+      wallsAttenuationArray = [0.5, 14.6, 10.3];
+    }
+    let isWallsListNotEmpty = false;
+    let periodOfDistance: number = distance / 0.5;
+    let pathLoss: number;
+    let drywallCounter = 0;
+    let redBrickCounter = 0;
+    let cinderBlockCounter = 0;
+    periodOfDistance = Math.round(periodOfDistance) + 1;
+
+    if (distanceWallsList.length > 0) {
+      isWallsListNotEmpty = true;
+    }
+    switch (isWallsListNotEmpty) {
+      case false:
+        return (txPower - (20 * Math.log10((4 * Math.PI * distance) / wavelength)));
+      case true:
+        for (let i = 1; i <= periodOfDistance; i++) {
+          for (let j = 0; j < distanceWallsList.length; j++) {
+            if (((i * 0.5) <= distanceWallsList[j]) && ((i * 0.5 + 0.5) >= distanceWallsList[j])) {
+              const sumCounter: number = drywallCounter + redBrickCounter + cinderBlockCounter;
+              if (sumCounter < typesOfWalls.length) {
+                const typeOfWall: string = typesOfWalls[j];
+                console.log(typeOfWall);
+                switch (typeOfWall) {
+                  case 'DRYWALL':
+                    ++drywallCounter;
+                    break;
+                  case'RED-BRICK':
+                    ++redBrickCounter;
+                    break;
+                  case 'CINDER-BLOCK':
+                    ++cinderBlockCounter;
+                    break;
+                }
+              }
+            }
+          }
+        }
+        return (txPower - (20 * Math.log10((4 * Math.PI * distance) / wavelength) + (drywallCounter * wallsAttenuationArray[0]
+          + redBrickCounter * wallsAttenuationArray[1] + cinderBlockCounter * wallsAttenuationArray[2])));
+    }
+  }
 }

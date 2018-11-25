@@ -7,8 +7,12 @@ import {Observable, Subject} from "rxjs";
 })
 export class DistanceService {
   private distance: number;
+  private _coordinateXTransceiver: number;
+  private _coordinateYTransceiver: number;
   private distanceInPixel: number;
   private distanceSubject = new Subject<number>();
+  private _distanceForHeatMap: number = 0;
+  private _distanceInPixelForHeatMap: number = 0
 
   public solveDistance(x1: number, y1: number, x2: number, y2: number) {
     let currentDistance: number;
@@ -21,7 +25,16 @@ export class DistanceService {
     this.distance = currentDistance;
     this.distanceSubject.next(this.distance);
   }
-
+  public solveDistanceForHeatMap(x1: number, y1: number, x2: number, y2: number){
+    let currentDistance: number;
+    currentDistance = Math.sqrt(Math.pow((x2 - x1), 2) +
+      Math.pow((y2 - y1), 2));
+    this._distanceInPixelForHeatMap = currentDistance;
+    currentDistance = currentDistance / 38;
+    currentDistance = currentDistance * 353; // angularMath.mul(this.distance, 353);
+    currentDistance = currentDistance / 100; // angularMath.div(this.distance, 100);
+    this._distanceForHeatMap = currentDistance;
+  }
   public getDistance(): number {
     return this.distance;
   }
@@ -37,5 +50,26 @@ export class DistanceService {
 
   public getSubDistance(): Observable<number> {
     return this.distanceSubject.asObservable();
+  }
+  get coordinateXTransceiver(): number {
+    return this._coordinateXTransceiver;
+  }
+  set coordinateXTransceiver(value: number) {
+    this._coordinateXTransceiver = value;
+  }
+  get coordinateYTransceiver(): number {
+    return this._coordinateYTransceiver;
+  }
+  set coordinateYTransceiver(value: number) {
+    this._coordinateYTransceiver = value;
+  }
+
+
+  get distanceInPixelForHeatMap(): number {
+    return this._distanceInPixelForHeatMap;
+  }
+
+  get distanceForHeatMap(): number {
+    return this._distanceForHeatMap;
   }
 }

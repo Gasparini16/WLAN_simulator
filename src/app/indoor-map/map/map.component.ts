@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DistanceService } from '../distance-algorithm/distanceService';
 import { DrawService } from '../hotelMap/drawService';
+import {HeatMapService} from "../heatMap/heat-map.service";
 
 @Component({
   selector: 'app-map',
@@ -21,7 +22,7 @@ export class MapComponent implements OnInit {
  solvedDistance: number;
 
   constructor(private distance: DistanceService,
-    private drawHotel: DrawService ) {}
+    private drawHotel: DrawService, private heatMap: HeatMapService ) {}
 
   ngOnInit() {
     this.drawHotel.drawHotelMap();
@@ -42,6 +43,8 @@ export class MapComponent implements OnInit {
         this.clientXTransmitter = event.clientX - bounds.left;
         this.clientYTransmitter = event.clientY - bounds.top;
         this.isFirstClick = false;
+        this.distance.coordinateXTransceiver = this.clientXTransmitter;
+        this.distance.coordinateYTransceiver = this.clientYTransmitter;
         break;
       case false:
         this.clientXReceiver = event.clientX - bounds.left;
@@ -58,6 +61,9 @@ export class MapComponent implements OnInit {
       this.solvedDistance = data;
       console.log(this.solvedDistance);
     });
+  }
+  onClickDrawHeatMap() {
+    this.heatMap.putColorOnPixel();
   }
   getSolvedDistance() {
     return this.solvedDistance;

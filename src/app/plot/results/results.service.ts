@@ -64,6 +64,8 @@ export class ResultsService {
           this._pathLoss[i] = this.kamerman.kamermanPathLoss[i];
           this._distanceArray[i] = this.kamerman.realDistance[i];
         }
+        this.kamerman.solveOnSpecialDistance(distance, power);
+        console.log(this.kamerman.powerLevelAtSpecialPoint);
         break;
       case ModelsOfPropagation.multiWall:
         this.multiWall.solveMultiWall(distance, wavelength, walls, power, typesOfWalls, frequency);

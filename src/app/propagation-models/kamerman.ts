@@ -9,6 +9,7 @@ export class Kamerman {
   private readonly pathLossExponnent: number[] = [2, 3.3];
   private _realDistance: number [] = [];
   private _kamermanPathLoss: number [] = [];
+  private _powerLevelAtSpecialPoint: number;
 
   public solveOneMetterPathLoss(wavelength: number) {
     this.oneMetterPathLoss = 20 * Math.log10((4 * Math.PI) / wavelength);
@@ -50,9 +51,8 @@ export class Kamerman {
   }
 
   public solveOnSpecialDistance(distance: number, txPower: number): number {
-    if (distance <= 8) {
+    if (distance <= 8)
       return (txPower - (this.getOneMetterPathLoss() + this.pathLossExponnent[0] * 10 * Math.log10(distance)));
-    }
     else if (distance > 8) {
       return (txPower - (this.getEightMetterPathLoss() + this.pathLossExponnent[1] * 10 * Math.log10(distance)
         + this.pathLossExponnent[1] * 10 * Math.log10(distance / 8)));
@@ -70,5 +70,9 @@ export class Kamerman {
   public clearResultsArrays() {
     this._kamermanPathLoss.slice(0,this._kamermanPathLoss.length);
     this._realDistance.slice(0,this._realDistance.length);
+  }
+
+  get powerLevelAtSpecialPoint(): number {
+    return this._powerLevelAtSpecialPoint;
   }
 }

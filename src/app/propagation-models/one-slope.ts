@@ -6,6 +6,7 @@ providedIn: 'root'
 export class OneSlope {
 private oneMetterPathLoss: number;
 private _realDistanceArray: number [] = [];
+private _powerLevelAtSpecialPoint: number = 0;
 get realDistanceArray(): number [] {
   return this._realDistanceArray;
 }
@@ -35,12 +36,20 @@ public solveOneMetterPathLoss(wavelength: number) {
     this._realDistanceArray[i] = i * 0.5;
     }
   }
-  public solveOnSpecialDistance(distance: number, txPower: number): number {
-    return (txPower - Math.round((this.getOneMetterPathLoss() + 33 * Math.log10(distance)) * 10) / 10);
+  public solveOnSpecialDistance(distance: number, txPower: number){
+    return  txPower - Math.round((this.getOneMetterPathLoss() + 33 * Math.log10(distance)) * 10) / 10;
   }
 
   public clearResultsArrays() {
   this._oneSlopePathLossArray.slice(0,this._oneSlopePathLossArray.length);
   this._realDistanceArray.slice(0,this._realDistanceArray.length);
+  }
+
+  get powerLevelAtSpecialPoint(): number {
+    return this._powerLevelAtSpecialPoint;
+  }
+
+  set powerLevelAtSpecialPoint(value: number) {
+    this._powerLevelAtSpecialPoint = value;
   }
 }
