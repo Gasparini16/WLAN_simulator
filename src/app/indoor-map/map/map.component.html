@@ -1,6 +1,6 @@
 <div class="box">
-  <canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, canvas)" (mousemove)="coordinates($event, canvas)"></canvas>
-  <span><canvas id="legend" class="legendMap" width="120" height="400"></canvas></span>
+  <canvas id="hotelMap" class="hotel ml-3" width="800" height="350" on-click="coordinatesOfTx($event, canvas)" (mousemove)="coordinates($event, canvas)"></canvas>
+  <span><canvas id="legend" class="legendMap ml-2" width="120" height="400"></canvas></span>
 </div>
   <p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
 <div class="btn-group" role="group">
