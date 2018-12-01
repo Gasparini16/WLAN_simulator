@@ -12,7 +12,7 @@ export class ChartComponent implements OnInit {
  chart: Chart;
 
   ngOnInit() {
-    this.init();
+   // this.init();
   }
   myChart() {
      if (this.results.distanceArray.length === this.results.pathLoss.length) {
@@ -66,6 +66,12 @@ export class ChartComponent implements OnInit {
   }
   clearSolvedResults() {
     this.results.clearAllResults();
+    if (this.results.distanceArray.length === this.results.pathLoss.length) {
+      for (let i = 0; i < this.results.distanceArray.length; i++) {
+        this.chart.removePoint(i, 0);
+        this.chart.removePoint(i, 1);
+      }
+    }
     this.chart.destroy();
   }
 }

@@ -1,48 +1,67 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
-providedIn: 'root'
+  providedIn: 'root'
 })
 export class OneSlope {
-private oneMetterPathLoss: number;
-private _realDistanceArray: number [] = [];
-private _powerLevelAtSpecialPoint: number = 0;
-get realDistanceArray(): number [] {
-  return this._realDistanceArray;
-}
-private _oneSlopePathLossArray: number [] = [];
-get oneSlopePathLossArray(): number [] {
-  return this._oneSlopePathLossArray;
-}
+  private _oneMetterPathLoss: number;
+  private _realDistanceArray: number [] = [];
+  private _powerLevelAtSpecialPoint: number = 0;
+  private _oneSlopePathLossArray: number [] = [];
 
+  get realDistanceArray(): number [] {
+    return this._realDistanceArray;
+  }
 
+  get oneSlopePathLossArray(): number [] {
+    return this._oneSlopePathLossArray;
+  }
 
-public solveOneMetterPathLoss(wavelength: number) {
+  set realDistanceArray(value: number[]) {
+    this._realDistanceArray = value;
+  }
+
+  set oneSlopePathLossArray(value: number[]) {
+    this._oneSlopePathLossArray = value;
+  }
+
+  set oneMetterPathLoss(value: number) {
+    this._oneMetterPathLoss = value;
+  }
+
+  get oneMetterPathLoss(): number {
+    return this._oneMetterPathLoss;
+  }
+
+  public solveOneMetterPathLoss(wavelength: number) {
     this.oneMetterPathLoss = 20 * Math.log10((4 * Math.PI) / wavelength);
   }
-  public getOneMetterPathLoss(): number {
-    return this.oneMetterPathLoss;
-  }
 
-   public solveOneSlope(distance: number, txPower: number) {
-    let periodOfDistance: number = distance / 0.5;
+  public solveOneSlope(distance: number, txPower: number) {
+    let periodOfDistance = distance / 0.5;
+    if((periodOfDistance % 1) <= 0.5) {
+      periodOfDistance = Math.round(periodOfDistance) + 1;
+    }
+    else if((periodOfDistance % 1) > 0.5) {
+      periodOfDistance = Math.round(periodOfDistance);
+    }
     let pathLoss: number;
-    periodOfDistance = Math.round(periodOfDistance) + 1;
-    this._realDistanceArray[0] = 0;
-    this._oneSlopePathLossArray[0] = txPower;
+    this.realDistanceArray[0] = 0;
+    this.oneSlopePathLossArray[0] = txPower;
     for (let i = 1; i <= periodOfDistance; i++) {
-    pathLoss = txPower - Math.round((this.getOneMetterPathLoss() + 33 * Math.log10((i * 0.5))) * 10) / 10;
-    this._oneSlopePathLossArray[i] = pathLoss;
-    this._realDistanceArray[i] = i * 0.5;
+      pathLoss = txPower - Math.round((this.oneMetterPathLoss + 33 * Math.log10((i * 0.5))) * 10) / 10;
+      this.oneSlopePathLossArray[i] = pathLoss;
+      this.realDistanceArray[i] = i * 0.5;
     }
   }
-  public solveOnSpecialDistance(distance: number, txPower: number){
-    return  txPower - Math.round((this.getOneMetterPathLoss() + 33 * Math.log10(distance)) * 10) / 10;
+
+  public solveOnSpecialDistance(distance: number, txPower: number) {
+    return txPower - Math.round((this.oneMetterPathLoss + 33 * Math.log10(distance)) * 10) / 10;
   }
 
   public clearResultsArrays() {
-  this._oneSlopePathLossArray.slice(0,this._oneSlopePathLossArray.length);
-  this._realDistanceArray.slice(0,this._realDistanceArray.length);
+    this.oneSlopePathLossArray = [];
+    this.realDistanceArray = [];
   }
 
   get powerLevelAtSpecialPoint(): number {

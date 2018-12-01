@@ -1,60 +1,65 @@
-import {Input, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Kamerman {
-  private oneMetterPathLoss: number;
-  private eightMetterPathLoss: number;
+  private _oneMeterPathLoss: number;
+  private _eightMeterPathLoss: number;
   private readonly pathLossExponnent: number[] = [2, 3.3];
   private _realDistance: number [] = [];
   private _kamermanPathLoss: number [] = [];
   private _powerLevelAtSpecialPoint: number;
 
-  public solveOneMetterPathLoss(wavelength: number) {
-    this.oneMetterPathLoss = 20 * Math.log10((4 * Math.PI) / wavelength);
+  public solveOneMeterPathLoss(wavelength: number) {
+    this._oneMeterPathLoss = 20 * Math.log10((4 * Math.PI) / wavelength);
   }
 
-  public solveEightMetterPathLoss(wavelength: number) {
-    this.eightMetterPathLoss = 20 * Math.log10((4 * Math.PI * 8) / wavelength);
+  public solveEightMeterPathLoss(wavelength: number) {
+    this._eightMeterPathLoss = 20 * Math.log10((4 * Math.PI * 8) / wavelength);
   }
 
-  public getOneMetterPathLoss(): number {
-    return this.oneMetterPathLoss;
+  get oneMeterPathLoss(): number {
+    return this._oneMeterPathLoss;
   }
 
-  public getEightMetterPathLoss(): number {
-    return this.eightMetterPathLoss;
+  get eightMeterPathLoss(): number {
+    return this._eightMeterPathLoss;
   }
 
   public solveKamerman(distance: number, txPower: number) {
-    let periodOfDistance: number = distance / 0.5;
     let pathLoss = 0;
-    this._kamermanPathLoss[0] = txPower;
-    this._realDistance[0] = 0;
-    periodOfDistance = Math.round(periodOfDistance) + 1;
+    this.kamermanPathLoss[0] = txPower;
+    this.realDistance[0] = 0;
+    let periodOfDistance = distance / 0.5;
+    if((periodOfDistance % 1) <= 0.5) {
+      periodOfDistance = Math.round(periodOfDistance) + 1;
+    }
+    else if((periodOfDistance % 1) > 0.5) {
+      periodOfDistance = Math.round(periodOfDistance);
+    }
     for (let i = 1; i <= periodOfDistance; i++) {
       if ((i * 0.5) <= 8) {
-        pathLoss = txPower - (this.getOneMetterPathLoss() + this.pathLossExponnent[0] * 10 * Math.log10(i * 0.5));
+        pathLoss = txPower - (this.oneMeterPathLoss + this.pathLossExponnent[0] * 10 * Math.log10(i * 0.5));
         pathLoss = Math.round(pathLoss * 10) / 10;
-        this._kamermanPathLoss[i] = pathLoss;
-        this._realDistance[i] = i * 0.5;
+        this.kamermanPathLoss[i] = pathLoss;
+        this.realDistance[i] = i * 0.5;
       }
       if ((i * 0.5) > 8) {
-        pathLoss = txPower - (this.getEightMetterPathLoss() + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5)
+        pathLoss = txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5)
           + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5 / 8));
         pathLoss = Math.round(pathLoss * 10) / 10;
-        this._kamermanPathLoss[i] = pathLoss;
-        this._realDistance[i] = i * 0.5;
+        this.kamermanPathLoss[i] = pathLoss;
+        this.realDistance[i] = i * 0.5;
       }
     }
   }
 
   public solveOnSpecialDistance(distance: number, txPower: number): number {
     if (distance <= 8)
-      return (txPower - (this.getOneMetterPathLoss() + this.pathLossExponnent[0] * 10 * Math.log10(distance)));
+      return (txPower - (this.oneMeterPathLoss + this.pathLossExponnent[0] * 10 * Math.log10(distance)));
     else if (distance > 8) {
-      return (txPower - (this.getEightMetterPathLoss() + this.pathLossExponnent[1] * 10 * Math.log10(distance)
+      return (txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(distance)
         + this.pathLossExponnent[1] * 10 * Math.log10(distance / 8)));
     }
   }
@@ -67,9 +72,17 @@ export class Kamerman {
     return this._realDistance;
   }
 
+  set kamermanPathLoss(value: number[]) {
+    this._kamermanPathLoss = value;
+  }
+
+  set realDistance(value: number[]) {
+    this._realDistance = value;
+  }
+
   public clearResultsArrays() {
-    this._kamermanPathLoss.slice(0,this._kamermanPathLoss.length);
-    this._realDistance.slice(0,this._realDistance.length);
+    this.kamermanPathLoss = [];
+    this.realDistance = [];
   }
 
   get powerLevelAtSpecialPoint(): number {

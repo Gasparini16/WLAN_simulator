@@ -101,7 +101,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -123,7 +123,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -145,7 +145,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -167,7 +167,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -189,7 +189,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -211,7 +211,7 @@ export class DrawService {
               this._typesOfWalls.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this.distanceWallslist.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+            this.distanceWallslist.push(Math.round(this.distanceService.distance * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -238,6 +238,8 @@ export class DrawService {
 
   clearCanvas() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this._typesOfWalls.slice(0,this.typesOfWalls.length);
+    this.distanceWallslist.slice(0,this.distanceWallslist.length);
   }
 
   setNumberOfWalls(numberOfWalls: number) {
@@ -257,7 +259,6 @@ export class DrawService {
     this.setNumberOfWalls(0);
     const a = (y2 - y1) / (x2 - x1); // y=ax+b
     const angle = Math.atan(a);
-    const b = y1 - a * x1;
     const distanceInPixel = this.distanceService.distanceInPixelForHeatMap;
     this.canvas = <HTMLCanvasElement>document.getElementById('hotelMap');
     this.context = this.canvas.getContext('2d');
@@ -305,7 +306,7 @@ export class DrawService {
       case 1:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1 + parameterN * parameterT))) {
-            this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1 + parameterN * parameterT);
+            //this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1 + parameterN * parameterT);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -317,7 +318,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+           // this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -325,7 +326,7 @@ export class DrawService {
       case 2:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1 - parameterN * parameterT))) {
-            this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1 - parameterN * parameterT);
+           // this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1 - parameterN * parameterT);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -337,7 +338,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+           // this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -345,7 +346,7 @@ export class DrawService {
       case 3:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1, y1 + parameterN * parameterT))) {
-            this.distanceService.solveDistance(x1, y1, x1, y1 + parameterN * parameterT);
+           // this.distanceService.solveDistance(x1, y1, x1, y1 + parameterN * parameterT);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -357,7 +358,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+           // this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -365,7 +366,7 @@ export class DrawService {
       case 4:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1, y1 - parameterN * parameterT))) {
-            this.distanceService.solveDistance(x1, y1, x1, y1 - parameterN * parameterT);
+            //this.distanceService.solveDistance(x1, y1, x1, y1 - parameterN * parameterT);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -377,7 +378,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+          //  this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -385,7 +386,7 @@ export class DrawService {
       case 5:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1 + parameterM * parameterT, y1))) {
-            this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1);
+           // this.distanceService.solveDistance(x1, y1, x1 + parameterM * parameterT, y1);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -397,7 +398,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+          //  this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }
@@ -405,7 +406,7 @@ export class DrawService {
       case 6:
         for (let i = 0; i < distanceInPixel; i++) {
           if (this.checkPixel(this.getPixelColor(x1 - parameterM * parameterT, y1))) {
-            this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1);
+          //  this.distanceService.solveDistance(x1, y1, x1 - parameterM * parameterT, y1);
             const wallThickness: number = Math.cos(angle) * this.lengthBlackPixel;
             if ((wallThickness > 0) && (wallThickness < 2)) {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.drywall);
@@ -417,7 +418,7 @@ export class DrawService {
               this._typesOfWallsForCurrentPixel.push(TypesOfWalls.cinderBlock);
             }
             this.lengthBlackPixel = 0;
-            this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
+          // this._distanceWallslistForCurrentPixel.push(Math.round(this.distanceService.getDistance() * 10) / 10);
           }
           parameterT += 1 / distanceInPixel;
         }

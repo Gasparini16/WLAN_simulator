@@ -59,7 +59,6 @@ export class MapComponent implements OnInit {
     this.drawHotel.solveEquation(this.clientXTransmitter, this.clientYTransmitter, this.clientXReceiver, this.clientYReceiver);
     this.distance.getSubDistance().subscribe(data => {
       this.solvedDistance = data;
-      console.log(this.solvedDistance);
     });
   }
   onClickDrawHeatMap() {

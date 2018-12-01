@@ -37,9 +37,17 @@ export class ResultsService {
     return this._pathLoss;
   }
 
+  set pathLoss(value: number[]) {
+    this._pathLoss = value;
+  }
+
+  set distanceArray(value: number[]) {
+    this._distanceArray = value;
+  }
+
   solvePathLossPropagationModel() {
     const currentModel: ModelsOfPropagation = this.txSettings.getPropagationModel();
-    const distance: number = this.distance.getDistance();
+    const distance: number = this.distance.distance;
     const walls: number[] = this.dataFromDraw.getListOfWalls();
     const wavelength: number = this.txSettings.solveWaveLength(this.txSettings.getFrequency());
     const power: number = this.txSettings.getTxPower();
@@ -52,27 +60,26 @@ export class ResultsService {
         this.oneSlope.solveOneMetterPathLoss(wavelength);
         this.oneSlope.solveOneSlope(distance, power);
         for (let i = 0; i < this.oneSlope.realDistanceArray.length; i++) {
-          this._pathLoss[i] = this.oneSlope.oneSlopePathLossArray[i];
-          this._distanceArray[i] = this.oneSlope.realDistanceArray[i];
+          this.pathLoss[i] = this.oneSlope.oneSlopePathLossArray[i];
+          this.distanceArray[i] = this.oneSlope.realDistanceArray[i];
         }
         break;
       case ModelsOfPropagation.kamerman:
-        this.kamerman.solveOneMetterPathLoss(wavelength);
-        this.kamerman.solveEightMetterPathLoss(wavelength);
+        this.kamerman.solveOneMeterPathLoss(wavelength);
+        this.kamerman.solveEightMeterPathLoss(wavelength);
         this.kamerman.solveKamerman(distance, power);
         for (let i = 0; i < this.kamerman.realDistance.length; i++) {
-          this._pathLoss[i] = this.kamerman.kamermanPathLoss[i];
-          this._distanceArray[i] = this.kamerman.realDistance[i];
+          this.pathLoss[i] = this.kamerman.kamermanPathLoss[i];
+          this.distanceArray[i] = this.kamerman.realDistance[i];
         }
         this.kamerman.solveOnSpecialDistance(distance, power);
-        console.log(this.kamerman.powerLevelAtSpecialPoint);
         break;
       case ModelsOfPropagation.multiWall:
         this.multiWall.solveMultiWall(distance, wavelength, walls, power, typesOfWalls, frequency);
         console.log(walls);
         for (let i = 0; i < this.multiWall.realDistance.length; i++) {
-          this._pathLoss[i] = this.multiWall.multiWallPathLoss[i];
-          this._distanceArray[i] = this.multiWall.realDistance[i];
+          this.pathLoss[i] = this.multiWall.multiWallPathLoss[i];
+          this.distanceArray[i] = this.multiWall.realDistance[i];
         }
         break;
     }
@@ -90,11 +97,12 @@ export class ResultsService {
   }
 
   clearAllResults() {
-    this.distance.clearDistance(0);
+    this.distance.distance = 0;
+    console.log(this.distance.distance);
     this.dataFromDraw.clearCanvas();
     this.dataFromDraw.drawHotelMap();
-    this._pathLoss.slice(0, this.pathLoss.length);
-    this._distanceArray.slice(0, this.distanceArray.length);
+     this.pathLoss = [];
+     this.distanceArray = [];
     const currentModel: ModelsOfPropagation = this.txSettings.getPropagationModel();
     switch (currentModel) {
       case ModelsOfPropagation.oneSlope:

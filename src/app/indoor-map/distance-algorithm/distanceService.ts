@@ -6,7 +6,7 @@ import {Observable, Subject} from "rxjs";
   providedIn: 'root'
 })
 export class DistanceService {
-  private distance: number;
+  private _distance: number;
   private _coordinateXTransceiver: number;
   private _coordinateYTransceiver: number;
   private distanceInPixel: number;
@@ -36,7 +36,7 @@ export class DistanceService {
     this._distanceForHeatMap = currentDistance;
   }
   public getDistance(): number {
-    return this.distance;
+    return this._distance;
   }
 
   public getDistanceInPixel(): number {
@@ -44,8 +44,8 @@ export class DistanceService {
   }
 
   public clearDistance(zeroDistance: number) {
-    this.distance = zeroDistance;
-    this.distanceSubject.next(this.distance);
+    this._distance = zeroDistance;
+    this.distanceSubject.next(this._distance);
   }
 
   public getSubDistance(): Observable<number> {
@@ -71,5 +71,14 @@ export class DistanceService {
 
   get distanceForHeatMap(): number {
     return this._distanceForHeatMap;
+  }
+
+  set distance(value: number) {
+    this._distance = value;
+    this.distanceSubject.next(this.distance);
+  }
+
+  get distance(): number {
+    return this._distance;
   }
 }

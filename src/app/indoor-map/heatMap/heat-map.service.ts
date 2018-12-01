@@ -68,8 +68,8 @@ export class HeatMapService {
             let distance = 0;
             this.distanceService.solveDistanceForHeatMap(xTransmitter,yTransmitter,i,j);
             distance = this.distanceService.distanceForHeatMap;
-            this.kamerman.solveOneMetterPathLoss(wavelength);
-            this.kamerman.solveEightMetterPathLoss(wavelength);
+            this.kamerman.solveOneMeterPathLoss(wavelength);
+            this.kamerman.solveEightMeterPathLoss(wavelength);
             powerAtPoint = this.kamerman.solveOnSpecialDistance(distance, txPower);
             this.color.setColorToDraw(powerAtPoint);
             const r: string = this.color.redColor.toString();
@@ -81,8 +81,8 @@ export class HeatMapService {
         }
         break;
       case ModelsOfPropagation.multiWall:
-        for (let i = 0; i < this.canvas.width; i+=4) {
-          for (let j = 0; j < this.canvas.height; j+=4) {
+        for (let i = 0; i < this.canvas.width; i+=10){
+          for (let j = 0; j < this.canvas.height; j+=10) {
             let powerAtPoint = 0;
             let distance = 0;
             this.distanceService.solveDistanceForHeatMap(xTransmitter,yTransmitter,i,j);
@@ -93,7 +93,7 @@ export class HeatMapService {
             const r: string = this.color.redColor.toString();
             const g: string = this.color.greenColor.toString();
             const b: string = this.color.blueColor.toString();
-            this.context.fillRect(i, j, 4, 4);
+            this.context.fillRect(i, j, 10, 10);
             this.context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
           }
         }
