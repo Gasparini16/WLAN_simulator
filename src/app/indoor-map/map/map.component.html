@@ -1,7 +1,11 @@
-<canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, canvas)" (mousemove)="coordinates($event, canvas)"></canvas>
-<p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
+<div class="box">
+  <canvas id="hotelMap" class="hotel" width="800" height="350" on-click="coordinatesOfTx($event, canvas)" (mousemove)="coordinates($event, canvas)"></canvas>
+  <span><canvas id="legend" class="legendMap" width="120" height="400"></canvas></span>
+</div>
+  <p>x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
 <div class="btn-group" role="group">
   <button type="button" class="btn btn-primary ml-2" (click) ="onClickSolveDistance()">Solve distance</button>
-  <button type="button" class="btn btn-primary ml-2" (click)="onClickDrawHeatMap()">Show heatmap</button>
+  <button type="button" class="btn btn-primary ml-2" (click)="onClickDrawHeatMap(); onClickAddLegend()">Show heatmap</button>
+  <input type="file" accept="image/*" (change)="onClickUploadImage($event)">
 </div>
 <p>{{ solvedDistance | number: '2.1-2'}} m</p>

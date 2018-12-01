@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { ModelsOfPropagation } from '../tx-settings-interface';
 import { SettingsService } from '../settings-service/settings.service';
+import {DistanceService} from "../../indoor-map/distance-algorithm/distanceService";
 
 @Component({
   selector: 'app-tx',
@@ -14,7 +15,8 @@ export class TxComponent implements OnInit {
   submitted = false;
   constructor(
     private formBuilder: FormBuilder,
-    private txSettings: SettingsService
+    private txSettings: SettingsService,
+    private scale: DistanceService
   ) { }
 
   ngOnInit() {
@@ -25,13 +27,15 @@ export class TxComponent implements OnInit {
     return this.formBuilder.group({
       txPower: ['20', [Validators.required, Validators.pattern('[0-9]*$')]],
       frequency: ['2412', [Validators.required, Validators.pattern('[0-9]*$')]],
-      propagationModel: ['Kamerman', Validators.required]
+      propagationModel: ['Kamerman', Validators.required],
+      scale: ['353',[Validators.required, Validators.pattern('[0-9]*$')]]
     });
   }
 
   onSubmit() {
      this.txSettings.setTxPower(parseInt(this.txForm.value.txPower, 10));
      this.txSettings.setFrequency(parseInt(this.txForm.value.frequency, 10));
+     this.scale.scale = Math.round(parseInt(this.txForm.value.scale,10));
      switch (this.txForm.value.propagationModel) {
        case 'Kamerman':
        this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);

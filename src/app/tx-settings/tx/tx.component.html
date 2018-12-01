@@ -31,6 +31,12 @@
           </select>
         </div>
       </div>
+    <div class="'col-sm-3">
+      <div class="form-group">
+        <label>Scale 1:</label>
+        <input type="number" formControlName="scale" class="form-control">
+      </div>
+    </div>
     </div>
     <button type = "submit" [disabled]="!txForm.valid" class="btn btn-success ml-2">Submit</button>
     <button (click)="resetForm()" class = "btn btn-dark ml-2">Reset</button>

@@ -20,6 +20,7 @@ export class MapComponent implements OnInit {
  clientX = 0;
  clientY = 0;
  solvedDistance: number;
+ url = '';
 
   constructor(private distance: DistanceService,
     private drawHotel: DrawService, private heatMap: HeatMapService ) {}
@@ -66,5 +67,11 @@ export class MapComponent implements OnInit {
   }
   getSolvedDistance() {
     return this.solvedDistance;
+  }
+  onClickUploadImage(event) {
+    this.drawHotel.onSelectFile(event);
+  }
+  onClickAddLegend(){
+    this.drawHotel.addGradientLegend();
   }
 }
