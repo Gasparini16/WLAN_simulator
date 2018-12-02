@@ -57,7 +57,7 @@ export class ResultsService {
     Math.round(periodOfDistance);
     switch (currentModel) {
       case ModelsOfPropagation.oneSlope:
-        this.oneSlope.solveOneMetterPathLoss(wavelength);
+        this.oneSlope.solveOneMeterPathLoss(wavelength);
         this.oneSlope.solveOneSlope(distance, power);
         for (let i = 0; i < this.oneSlope.realDistanceArray.length; i++) {
           this.pathLoss[i] = this.oneSlope.oneSlopePathLossArray[i];
