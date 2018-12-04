@@ -29,8 +29,8 @@ export class DistanceService {
       Math.pow((y2 - y1), 2));
     this.distanceInPixel = currentDistance;
     currentDistance = currentDistance / 38;
-    currentDistance = currentDistance * this.scale; // angularMath.mul(this.distance, 353);
-    currentDistance = currentDistance / 100; // angularMath.div(this.distance, 100);
+    currentDistance = currentDistance * this.scale;
+    currentDistance = currentDistance / 100;
     this.distance = currentDistance;
     this.distanceSubject.next(this.distance);
   }
@@ -40,21 +40,13 @@ export class DistanceService {
       Math.pow((y2 - y1), 2));
     this._distanceInPixelForHeatMap = currentDistance;
     currentDistance = currentDistance / 38;
-    currentDistance = currentDistance * this.scale; // angularMath.mul(this.distance, 353);
-    currentDistance = currentDistance / 100; // angularMath.div(this.distance, 100);
+    currentDistance = currentDistance * this.scale;
+    currentDistance = currentDistance / 100;
     this._distanceForHeatMap = currentDistance;
-  }
-  public getDistance(): number {
-    return this._distance;
   }
 
   public getDistanceInPixel(): number {
     return this.distanceInPixel;
-  }
-
-  public clearDistance(zeroDistance: number) {
-    this._distance = zeroDistance;
-    this.distanceSubject.next(this._distance);
   }
 
   public getSubDistance(): Observable<number> {

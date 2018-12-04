@@ -47,7 +47,7 @@ export class HeatMapService {
           for (let j = 0; j < this.canvas.height; j++) {
             let powerAtPoint = 0;
             let distance = 0;
-            this.oneSlope.solveOneMetterPathLoss(wavelength);
+            this.oneSlope.solveOneMeterPathLoss(wavelength);
             this.distanceService.solveDistanceForHeatMap(xTransmitter,yTransmitter,i,j);
             distance = this.distanceService.distanceForHeatMap;
             this.oneSlope.solveOnSpecialDistance(distance, txPower);

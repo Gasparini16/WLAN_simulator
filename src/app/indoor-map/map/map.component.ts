@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
  isFirstClick = true;
  clientX = 0;
  clientY = 0;
- solvedDistance: number;
+ solvedDistance: number = 0;
  url = '';
 
   constructor(private distance: DistanceService,
