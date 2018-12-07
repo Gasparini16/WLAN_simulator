@@ -487,10 +487,15 @@ export class DrawService {
     legendGradient.addColorStop(offsets[32],'rgb(0,120,240)');
     legendGradient.addColorStop(offsets[33],'rgb(0,40,240)');
     legendGradient.addColorStop(offsets[34],'rgb(32,0,240)');
-    context.fillStyle = legendGradient;
+    context.fillStyle = 'black';
     context.font = "12px Arial";
-    context.fillText('9 [dBm]',55,10);
-    context.fillRect(1, 1,50,170);
-    context.fillText('-97 [dBm]',55,170);
+    context.fillText('9 [dBm]', 55, 10);
+    context.fillText('-20 [dBm]', 55, 60);
+    context.fillText('-40 [dBm]', 55, 95);
+    context.fillText('-60 [dBm]', 55, 125);
+    context.fillText('-80 [dBm]', 55, 155);
+    context.fillText('-97 [dBm]', 55, 170);
+    context.fillStyle = legendGradient;
+    context.fillRect(1, 1, 50, 170);
   }
 }

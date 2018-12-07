@@ -57,7 +57,7 @@ export class HeatMapService {
             const g: string = this.color.greenColor.toString();
             const b: string = this.color.blueColor.toString();
             this.context.fillRect(i, j, 1, 1);
-             this.context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
+             this.context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.9)';
           }
         }
         break;
@@ -76,7 +76,7 @@ export class HeatMapService {
             const g: string = this.color.greenColor.toString();
             const b: string = this.color.blueColor.toString();
             this.context.fillRect(i, j, 1, 1);
-            this.context.fillStyle = 'rgba(' + this.color.redColor + ',' + this.color.greenColor + ',' + this.color.blueColor + ',0.8)';
+            this.context.fillStyle = 'rgba(' + this.color.redColor + ',' + this.color.greenColor + ',' + this.color.blueColor + ',0.9)';
           }
         }
         break;
@@ -94,7 +94,7 @@ export class HeatMapService {
             const g: string = this.color.greenColor.toString();
             const b: string = this.color.blueColor.toString();
             this.context.fillRect(i, j, 10, 10);
-            this.context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
+            this.context.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.9)';
           }
         }
         break;
