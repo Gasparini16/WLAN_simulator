@@ -46,8 +46,7 @@ export class Kamerman {
         this.realDistance[i] = i * 0.5;
       }
       if ((i * 0.5) > 8) {
-        pathLoss = txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5)
-          + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5 / 8));
+        pathLoss = txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(i * 0.5 / 8));
         pathLoss = Math.round(pathLoss * 10) / 10;
         this.kamermanPathLoss[i] = pathLoss;
         this.realDistance[i] = i * 0.5;
@@ -59,8 +58,7 @@ export class Kamerman {
     if (distance <= 8)
       return (txPower - (this.oneMeterPathLoss + this.pathLossExponnent[0] * 10 * Math.log10(distance)));
     else if (distance > 8) {
-      return (txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(distance)
-        + this.pathLossExponnent[1] * 10 * Math.log10(distance / 8)));
+      return (txPower - (this.eightMeterPathLoss + this.pathLossExponnent[1] * 10 * Math.log10(distance / 8)));
     }
   }
 

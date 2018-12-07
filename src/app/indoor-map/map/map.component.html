@@ -1,14 +1,29 @@
+<div class="container">
 <div class="box">
+  <div class="row">
+    <div class="centerMap">
   <canvas id="hotelMap" class="hotel ml-3" width="800" height="350" on-click="coordinatesOfTx($event, canvas)" (mousemove)="coordinates($event, canvas)"></canvas>
-  <span><canvas id="legend" class="legendMap ml-2" width="120" height="400"></canvas></span>
+  <canvas id="legend" class="legendMap ml-2" width="120" height="300"></canvas>
+    </div>
+  </div>
 </div>
+</div>
+<div class="row pull- ml-2">
   <p class="ml-2">x: {{clientX | number: '2.1-2'}}, y: {{clientY | number: '2.1-2'}}</p>
+  </div>
+  <div class="row pull-left ml-2">
   <p class="coordinates ml-2">Coordinates of transceiver and receiver:</p>
   <p class="coordinates ml-2">Tx: ({{clientXTransmitter | number: '2.1-2'}}, {{clientYTransmitter | number: '2.1-2'}})
       Rx: ({{clientXReceiver | number: '2.1-2'}}, {{clientYReceiver | number: '2.1-2'}})</p>
+  </div>
+  <div class="row pull-left ml-2">
 <div class="btn-group" role="group">
-  <button type="button" class="btn btn-primary ml-2" (click) ="onClickSolveDistance()">Solve distance</button>
+  <button type="button" class="btn btn-primary ml-2" (click) ="onClickSolveDistance();">Solve distance</button>
   <button type="button" class="btn btn-primary ml-2" (click)="onClickDrawHeatMap(); onClickAddLegend()">Show heatmap</button>
   <input type="file" accept="image/*" (change)="onClickUploadImage($event)">
 </div>
-<p class="coordinates ml-2">{{ solvedDistance | number: '2.1-2'}} m</p>
+</div>
+<div class ="row ml-2">
+<p class="coordinates ml-2">{{ getSolvedDistance() | number: '2.1-2'}} m</p>
+<p></p>
+</div>

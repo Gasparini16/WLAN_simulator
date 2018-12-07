@@ -1,3 +1,4 @@
+import { Chart } from 'angular-highcharts';
 import {Injectable} from '@angular/core';
 import {DistanceService} from 'src/app/indoor-map/distance-algorithm/distanceService';
 import {Kamerman} from 'src/app/propagation-models/kamerman';
@@ -24,6 +25,7 @@ export class ResultsService {
 
   private _pathLoss: number[] = [];
   private _distanceArray: number[] = [];
+  private chart: Chart;
 
   get propModel(): ModelsOfPropagation {
     return this.txSettings.getPropagationModel();
@@ -43,6 +45,15 @@ export class ResultsService {
 
   set distanceArray(value: number[]) {
     this._distanceArray = value;
+  }
+
+  insertData() {
+    if (this.distanceArray.length === this.pathLoss.length) {
+      for (let i = 0; i < this.distanceArray.length; i++) {
+        this.chart.addPoint([this.distanceArray[i], this.pathLoss[i]], 0);
+        this.chart.addPoint([this.distanceArray[i], -97], 1);
+      }
+    }
   }
 
   solvePathLossPropagationModel() {

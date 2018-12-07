@@ -35,7 +35,7 @@ export class TxComponent implements OnInit {
   onSubmit() {
      this.txSettings.setTxPower(parseInt(this.txForm.value.txPower, 10));
      this.txSettings.setFrequency(parseInt(this.txForm.value.frequency, 10));
-     this.scale.scale = Math.round(parseInt(this.txForm.value.scale,10));
+     this.scale.scale = parseInt(this.txForm.value.scale, 10);
      switch (this.txForm.value.propagationModel) {
        case 'Kamerman':
        this.txSettings.setPropagationModel(ModelsOfPropagation.kamerman);

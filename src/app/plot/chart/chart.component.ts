@@ -44,7 +44,7 @@ export class ChartComponent implements OnInit {
           name: 'Attenuation ' + this.results.propModel
         },
         {
-          name: 'Min Power Level [dBm]'
+          name: 'Min Power Level'
         }
       ],
       xAxis: {
