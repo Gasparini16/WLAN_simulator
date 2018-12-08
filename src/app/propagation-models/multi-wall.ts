@@ -98,8 +98,7 @@ export class MultiWall {
     this.realDistance = [];
   }
 
-  public solveOnSpecialDistance(distance: number, txPower: number, typesOfWalls: TypesOfWalls[],
-                                distanceWallsList: number[], frequency: number, wavelength: number) {
+  public solveOnSpecialDistance(distance: number, txPower: number, typesOfWalls: TypesOfWalls[], frequency: number, wavelength: number) {
     let wallsAttenuationArray: number [] = [];
     if ((frequency > 2400) && (frequency < 5000)) {
       wallsAttenuationArray = [0.5, 4.5, 6.7];
@@ -111,7 +110,7 @@ export class MultiWall {
     let drywallCounter = 0;
     let redBrickCounter = 0;
     let cinderBlockCounter = 0;
-    if (distanceWallsList.length > 0) {
+    if (typesOfWalls.length > 0) {
       isWallsListNotEmpty = true;
     }
     switch (isWallsListNotEmpty) {

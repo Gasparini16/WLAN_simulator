@@ -34,8 +34,6 @@ export class HeatMapService {
     this.canvas = <HTMLCanvasElement>document.getElementById('hotelMap');
     this.context = this.canvas.getContext('2d');
     const frequency: number = this.txSettings.getFrequency();
-    const typesOfWalls: TypesOfWalls[] = this.dataFromDraw.typesOfWallsForCurrentPixel;
-    const walls: number[] = this.dataFromDraw.distanceWallslistForCurrentPixel;
     const wavelength: number = this.txSettings.solveWaveLength(this.txSettings.getFrequency());
     const xTransmitter: number = this.distanceService.coordinateXTransceiver;
     const yTransmitter: number = this.distanceService.coordinateYTransceiver;
@@ -83,12 +81,13 @@ export class HeatMapService {
       case ModelsOfPropagation.multiWall:
         for (let i = 0; i < this.canvas.width; i+=10){
           for (let j = 0; j < this.canvas.height; j+=10) {
+            const typesOfWalls: TypesOfWalls[] = this.dataFromDraw.typesOfWallsForCurrentPixel;
             let powerAtPoint = 0;
             let distance = 0;
             this.distanceService.solveDistanceForHeatMap(xTransmitter,yTransmitter,i,j);
             distance = this.distanceService.distanceForHeatMap;
             this.dataFromDraw.solveEquationToCurrentPixel(xTransmitter,yTransmitter,i,j);
-            powerAtPoint = this.multiWall.solveOnSpecialDistance(distance, txPower, typesOfWalls, walls, frequency, wavelength);
+            powerAtPoint = this.multiWall.solveOnSpecialDistance(distance, txPower, typesOfWalls, frequency, wavelength);
             this.color.setColorToDraw(powerAtPoint);
             const r: string = this.color.redColor.toString();
             const g: string = this.color.greenColor.toString();

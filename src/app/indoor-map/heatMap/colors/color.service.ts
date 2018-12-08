@@ -139,62 +139,62 @@ export class ColorService {
     if ((txPower < -51) && (txPower >= -57)) {
       this._redColor = 220;
       this._greenColor = 240;
-      this._blueColor = 0;
+      this._blueColor = 100;
     }
     if ((txPower < -57) && (txPower >= -60)) {
-      this._redColor = 208;
-      this._greenColor = 240;
-      this._blueColor = 0;
-    }
-    if ((txPower < -60) && (txPower >= -63)) {
-      this._redColor = 192;
-      this._greenColor = 240;
-      this._blueColor = 0;
-    }
-    if ((txPower < -63) && (txPower >= -66)) {
       this._redColor = 180;
       this._greenColor = 240;
       this._blueColor = 0;
     }
-    if ((txPower < -66) && (txPower >= -69)) {
+    if ((txPower < -60) && (txPower >= -63)) {
       this._redColor = 160;
       this._greenColor = 240;
       this._blueColor = 0;
     }
-    if ((txPower < -69) && (txPower >= -72)) {
-      this._redColor = 140;
+    if ((txPower < -63) && (txPower >= -66)) {
+      this._redColor = 130;
       this._greenColor = 240;
+      this._blueColor = 0;
+    }
+    if ((txPower < -66) && (txPower >= -69)) {
+      this._redColor = 90;
+      this._greenColor = 240;
+      this._blueColor = 0;
+    }
+    if ((txPower < -69) && (txPower >= -72)) {
+      this._redColor = 40;
+      this._greenColor = 255;
       this._blueColor = 0;
     }
     if ((txPower < -72) && (txPower >= -75)) {
       this._redColor = 120;
       this._greenColor = 240;
-      this._blueColor = 0;
+      this._blueColor = 150;
     }
     if ((txPower < -75) && (txPower >= -78)) {
       this._redColor = 100;
       this._greenColor = 240;
-      this._blueColor = 0;
+      this._blueColor = 180;
     }
     if ((txPower < -78) && (txPower >= -81)) {
-      this._redColor = 20;
+      this._redColor = 60;
       this._greenColor = 240;
-      this._blueColor = 0;
+      this._blueColor = 180;
     }
     if ((txPower < -81) && (txPower >= -84)) {
       this._redColor = 0;
-      this._greenColor = 240;
-      this._blueColor = 80;
+      this._greenColor = 255;
+      this._blueColor = 240;
     }
     if ((txPower < -84) && (txPower >= -87)) {
       this._redColor = 0;
-      this._greenColor = 240;
-      this._blueColor = 200;
+      this._greenColor = 160;
+      this._blueColor = 240;
     }
     if ((txPower < -87) && (txPower >= -90)) {
       this._redColor = 0;
-      this._greenColor = 240;
-      this._blueColor = 220;
+      this._greenColor = 130;
+      this._blueColor = 255;
     }
     if ((txPower < -90) && (txPower >= -93)) {
       this._redColor = 0;
@@ -202,14 +202,14 @@ export class ColorService {
       this._blueColor = 240;
     }
     if ((txPower < -93) && (txPower > -97)) {
-      this._redColor = 0;
-      this._greenColor = 40;
-      this._blueColor = 240;
+      this._redColor = 120;
+      this._greenColor = 80;
+      this._blueColor = 255;
     }
     if (txPower <= -97) {
-      this._redColor = 32;
+      this._redColor = 150;
       this._greenColor = 0;
-      this._blueColor = 194;
+      this._blueColor = 255;
     }
   }
 }

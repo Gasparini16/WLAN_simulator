@@ -65,6 +65,7 @@ export class MapComponent implements OnInit {
   }
   onClickDrawHeatMap() {
     this.heatMap.putColorOnPixel();
+    this.drawHotel.drawHotelMap();
   }
   getSolvedDistance() {
     return this.solvedDistance;

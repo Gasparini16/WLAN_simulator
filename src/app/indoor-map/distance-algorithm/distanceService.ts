@@ -53,7 +53,8 @@ export class DistanceService {
    console.log(this.scale);
    console.log(currentDistance);
   }
-  public solveDistanceForHeatMap(x1: number, y1: number, x2: number, y2: number){
+  public solveDistanceForHeatMap(x1: number, y1: number, x2: number, y2: number) {
+    this.distanceForHeatMap = 0;
     let currentDistance: number;
     currentDistance = Math.sqrt(Math.pow((x2 - x1), 2) +
       Math.pow((y2 - y1), 2));
@@ -113,7 +114,9 @@ export class DistanceService {
   get distanceForHeatMap(): number {
     return this._distanceForHeatMap;
   }
-
+  set distanceForHeatMap(value: number) {
+    this._distanceForHeatMap = value;
+  }
   set distance(value: number) {
     this._distance = value;
   //  this.distanceSubject.next(this.distance);
