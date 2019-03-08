@@ -1,5 +1,6 @@
 # WlanSimulator
 WiFi propagation simulator of wide-area in indoor environments. 
+Project made as part of engineering thesis.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
 
