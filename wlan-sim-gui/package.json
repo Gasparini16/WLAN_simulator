@@ -25,7 +25,7 @@
     "angular-ts-math": "^1.0.7",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.0",
-    "highcharts": "^6.2.0",
+    "highcharts": "^7.2.2",
     "ngx-filesaver": "^2.1.1",
     "rxjs": "^6.3.3",
     "zone.js": "~0.8.26"
